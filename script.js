@@ -6,9 +6,10 @@ var exceptions = ["いき"]; //use verb stems
 function isInArray(array, search) {
     return array.indexOf(search) >= 0;
 }
-      
+   var verb = "";
+
    $( "#submit" ).click(function() {
-   var verb = $('#enter').val();
+   verb = $('#enter').val();
    teConjugate();
 });
     
