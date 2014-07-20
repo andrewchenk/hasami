@@ -8,11 +8,12 @@ function isInArray(array, search) {
 }
       
    $( "#submit" ).click(function() {
+   var verb = $('#enter').val();
    teConjugate();
 });
     
     function teConjugate() {
-    var verb = $('#enter').val();
+    
     //What is the verb we're manipulating?
     printPage("Your initial input is " + verb + ".");
     printPage("");
