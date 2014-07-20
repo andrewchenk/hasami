@@ -5,27 +5,29 @@ var exceptions = ["いき"]; //use verb stems
  
 function isInArray(array, search) {
     return array.indexOf(search) >= 0;
-}
+} 
    var verb = "";
-
+   
+   //Click the button to get the form value.
    $( "#submit" ).click(function() {
    verb = $('#enter').val();
    teConjugate();
 });
     
+    //add input to the page
+    function printPage (input) {
+        $("body").append(input + "<br>");
+    }
+    
     function teConjugate() {
+      
+    //Used in console.log.
+    var teFormIs = "The TE form of " + verb + " is ";
     
     //What is the verb we're manipulating?
     printPage("Your initial input is " + verb + ".");
     printPage("");
-      
-    //Used in console.log.
-    var teFormIs = "The TE form of " + verb + " is ";
-   
-    function printPage (input) {
-        $("body").append(input + "<br>");
-    }
-   
+
     //Print the type of verb for each type, as well as whether it is an exception or not.
     var g1 = "Group 1";
     var g2 = "Group 2";
