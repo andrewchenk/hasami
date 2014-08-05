@@ -7,10 +7,6 @@ $(document).ready(function () {
         return array.indexOf(search) >= 0;
     }
 
-    var input = {};
-    input.verb = "";
-
-    var verb = "";
 
     //Print the type of verb for each type, as well as whether it is an exception or not.
     var g1 = "Group 1";
@@ -28,51 +24,50 @@ $(document).ready(function () {
 
     //Click the button to get the form value.
     $("#submit").click(function () {
-        verb = $('#enter').val();
-        var teFormIs = "The TE form of " + verb + " is ";
+        var verb = {};
+        verb.value = $('#enter').val();
+        var teFormIs = "The TE form of " + verb.value + " is ";
         //Useful for Group 1 verbs.
-        var verbStemWithoutPreMasu = verb.slice(0, -3);
+        verb.stemWithoutPreMasu = verb.value.slice(0, -3);
         //Get the character before "ます" of the verb (premasu). Manipulate it using its properties and methods.
         var preMasu = {};
-        preMasu.old = verb.slice(-3, -2);
+        preMasu.old = verb.value.slice(-3, -2);
         preMasu.te = "";
         //This method conjugates the preMasu and prints a result.
         preMasu.change = function (conjugation) {
             preMasu.te = conjugation;
             printPage(preMasu.old + " conjugates to " + preMasu.te + ".");
-            printPage(teFormIs + verbStemWithoutPreMasu + preMasu.te + ".");
+            printPage(teFormIs + verb.stemWithoutPreMasu + preMasu.te + ".");
         };
 
         //Useful for Group 2 and Group 3 verbs.
-        var verbStem = verb.slice(0, -2);
+        verb.stem = verb.value.slice(0, -2);
 
-        function printVerbStemTe() {
-
-            var verbStemTe = verbStem + "て";
-            printPage(teFormIs + verbStemTe + ".");
+        verb.printStemTe = function () {
+            printPage(teFormIs + verb.stem + "て" + ".");
         }
 
         //Specify what a verb means to differentiate it from a possible alternative.
         function specify(definition) {
-            printPage("This verb, " + verb + ", means \"" + definition + "\".");
+            printPage("This verb, " + verb.value + ", means \"" + definition + "\".");
         }
 
         function teConjugate() {
 
             //What is the verb we're manipulating?
-            printPage("Your initial input is " + verb + ".");
+            printPage("Your initial input is " + verb.value + ".");
             printPage("");
 
             //Check if it's a group three verb and conjugate accordingly.
-            if (isInArray(groupThree, verb) || isInArray(groupThree, verbStem)) {
+            if (isInArray(groupThree, verb.value) || isInArray(groupThree, verb.stem)) {
                 printType(g3);
-                if (verb == "きます" || verb == "来ます") {
+                if (verb.value == "きます" || verb == "来ます") {
                     specify("to come");
-                    printVerbStemTe();
+                    verb.printStemTe();
 
-                } else if (verb == "します") {
+                } else if (verb.value == "します") {
                     specify("to do");
-                    printVerbStemTe();
+                    verb.printStemTe();
                 }
                 printPage("xxx");
             }
@@ -99,13 +94,13 @@ $(document).ready(function () {
             //We'll assume everything else that's not group one is a group two verb.
             else {
                 printType(g2);
-                printVerbStemTe();
+                verb.printStemTe();
                 printPage("xxx");
             }
 
-            //Check if the verb is possibly an exception to the usual group rules. We can add more else ifs for more exceptions and use printType and specify. Use either the group one method (preMasu.change) or the group two function printVerbStemTe accordingly.
-            if (isInArray(exceptions, verbStem)) {
-                if (verbStem == "行き" || verbStem == "いき") {
+            //Check if the verb is possibly an exception to the usual group rules. We can add more else ifs for more exceptions and use printType and specify. Use either the group one method (preMasu.change) or the group two function verb.printStemTe accordingly.
+            if (isInArray(exceptions, verb.stem)) {
+                if (verb.stem == "行き" || verb.stem == "いき") {
                     printType(g1, ex);
                     specify("to go");
                     preMasu.change("って");
@@ -115,7 +110,6 @@ $(document).ready(function () {
             printPage("~~~");
             printPage("");
         }
-
 
         teConjugate();
     });
