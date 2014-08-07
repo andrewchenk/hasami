@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script type="text/javascript" src="jquery-2.1.1.min.js"></script>
     <script type="text/javascript" src="script.js"></script>
     <title>Result</title>
 </head>
@@ -11,32 +11,38 @@
 <body>
     <form>
         Enter your verb here:
-        <input type="text" id="enter" value="~ます"></input>
+        <input type="text" id="enter" value="Dictionary form"></input>
         <br>
         <input type="button" id="submit" value="Conjugate"></input>
     </form>
-    <table>
+    <table border="1px">
         <tr>
             <td>GROUP</td>
-            <td id="group"></td>
+            <td><span id="group"></span>
+            </td>
         </tr>
         <tr>
             <td>STEM</td>
-            <td id="stem"></td>
+            <td><span id="stem"></span>
+            </td>
         </tr>
         <tr>
             <td>U</td>
-            <td id="u"></td>
+            <td><span id="u"></span>
+            </td>
         </tr>
         <tr>
             <td>MASU</td>
-            <td id="masu"></td>
+            <td><span id="masu"></span>
+            </td>
         </tr>
         <td>TE</td>
-        <td id="te"></td>
+        <td><span id="te"></span>
+        </td>
         <tr>
             <td>TA</td>
-            <td id="ta"></td>
+            <td><span id="ta"></span>
+            </td>
         </tr>
     </table>
 </body>
