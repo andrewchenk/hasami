@@ -1,6 +1,6 @@
 $(document).ready(function () {
-    var groupOne = ["う", "く", "ぐ", "す", "つ", "ぬ", "ぶ", "む", "る"];
-    var groupTwo = ["い", "き", "し", "ち", "に", "え", "け", "せ", "て", "ね", "へ", "め", "れ", "ぎ", "じ", "び", "ぴ", "げ", "ぜ", "で", "べ", "ぺ"]
+    var groupOne = ["む", "ぬ", "ぶ", "う", "つ", "る", "く", "ぐ", "す"];
+    var groupTwo = ["い", "き", "し", "ち", "に", "ひ", "み", "り", "え", "け", "せ", "て", "ね", "へ", "め", "れ", "ぎ", "じ", "び", "ぴ", "げ", "ぜ", "で", "べ", "ぺ"]
     var groupThree = ["来", "くる", "する"];
 
     //check if in array
@@ -13,6 +13,8 @@ $(document).ready(function () {
         $("#" + id).replaceWith("<span id = " + id + ">" + input + "</span>");
     }
 
+
+
     //Click the button to get the form value.
     $("#submit").click(function () {
         var verb = {};
@@ -21,14 +23,13 @@ $(document).ready(function () {
         verb.u = $('#enter').val();
         verb.end = verb.u.slice(-1);
         verb.endTwo = verb.u.slice(-2, -1);
-        verb.stem = verb.u.slice(0, -2);
+        verb.stem = "";
         verb.masu = "";
+        verb.preMasu = "";
         verb.ta = "";
         verb.te = "";
 
         printPage("u", verb.u);
-        printPage("stem", verb.stem);
-        printPage("ta", verb.endTwo);
 
         function getVerbGroup() {
             if (isInArray(groupThree, verb.u)) {
@@ -38,8 +39,34 @@ $(document).ready(function () {
             } else if (isInArray(groupOne, verb.end)) {
                 verb.group = "1";
             }
-
             printPage("group", verb.group);
+        }
+
+        function getVerbStem() {
+            if (verb.group === "1") {
+                function checkChangePreMasu(a, b) {
+                    if (verb.end === a) {
+                        verb.preMasu = b;
+                        printPage("ta", verb.preMasu);
+                    }
+                }
+                checkChangePreMasu("む", "み");
+                checkChangePreMasu("ぬ", "に");
+                checkChangePreMasu("ぶ", "び");
+                checkChangePreMasu("う", "い");
+                checkChangePreMasu("つ", "ち");
+                checkChangePreMasu("る", "り");
+                checkChangePreMasu("く", "き");
+                checkChangePreMasu("ぐ", "ぎ");
+                checkChangePreMasu("す", "し");
+
+                verb.stem = verb.u.slice(0, -1) + verb.preMasu;
+
+            }
+            if (verb.group === "2") {
+                verb.stem = verb.u.slice(0, -1);
+            }
+            printPage("stem", verb.stem);
         }
         //function teConjugate() {
 
@@ -57,6 +84,6 @@ $(document).ready(function () {
 
         //};
         getVerbGroup();
-
+        getVerbStem();
     });
 });
