@@ -1,5 +1,19 @@
 $(document).ready(function () {
-    var groupOne = ["む", "ぬ", "ぶ", "う", "つ", "る", "く", "ぐ", "す"];
+    //object of array hirigana
+    var hiragana = {};
+    hiragana.a = ["あ", "か", "さ", "た", "な", "は", "ま", "や", "ら", "わ", "が", "ざ", "だ", "ば", "ぱ"];
+    hiragana.i = ["い", "き", "し", "ち", "に", "ひ", "み", " ", "り", " ", "ぎ", "じ", "ぢ", "び", "ぴ"];
+    hiragana.u = ["う", "く", "す", "つ", "ぬ", "ふ", "む", "ゆ", "る", " ", "ぐ", "ず", "づ", "ぶ", "ぷ"];
+    hiragana.e = ["え", "け", "せ", "て", "ね", "へ", "め", " ", "れ", " ", 　"げ", "ぜ", "で", "べ", "ぺ"];
+    hiragana.o = ["お", "こ", "そ", "と", "の", "ほ", "も", "よ", "ろ", "を", "ご", "ぞ", "ど", "ぼ", "ぽ"];
+    hiragana.change = function (input, output, initVowel, desiredVowel) {
+        var x = hiragana[initVowel].indexOf(input);
+        console.log(x);
+        output = hiragana[desiredVowel][x];
+        console.log(output); //just set it to return
+    }
+
+    var groupOne = ["う", "く", "ぐ", "す", "つ", "ぬ", "ぶ", "む", "る"]
     var groupTwo = ["い", "き", "し", "ち", "に", "ひ", "み", "り", "え", "け", "せ", "て", "ね", "へ", "め", "れ", "ぎ", "じ", "び", "ぴ", "げ", "ぜ", "で", "べ", "ぺ"]
     var groupThree = ["来", "くる", "する"];
 
@@ -31,7 +45,7 @@ $(document).ready(function () {
 
         printPage("u", verb.u);
 
-        function getVerbGroup() {
+        verb.getGroup = function () {
             if (isInArray(groupThree, verb.u)) {
                 verb.group = "3";
             } else if (verb.end === "る" && isInArray(groupTwo, verb.endTwo)) {
@@ -42,15 +56,15 @@ $(document).ready(function () {
             printPage("group", verb.group);
         }
 
-        function getVerbStem() {
+        verb.getStem = function () {
             if (verb.group === "1") {
-                function checkChangePreMasu(a, b) {
+                /* function checkChangePreMasu(a, b) {
                     if (verb.end === a) {
                         verb.preMasu = b;
                         printPage("ta", verb.preMasu);
                     }
                 }
-                checkChangePreMasu("む", "み");
+                 checkChangePreMasu("む", "み");
                 checkChangePreMasu("ぬ", "に");
                 checkChangePreMasu("ぶ", "び");
                 checkChangePreMasu("う", "い");
@@ -58,32 +72,44 @@ $(document).ready(function () {
                 checkChangePreMasu("る", "り");
                 checkChangePreMasu("く", "き");
                 checkChangePreMasu("ぐ", "ぎ");
-                checkChangePreMasu("す", "し");
+                checkChangePreMasu("す", "し"); */
 
+                hiragana.change(verb["end"], verb["preMasu"], "u", "i");
+                console.log(verb.preMasu);
                 verb.stem = verb.u.slice(0, -1) + verb.preMasu;
 
             }
             if (verb.group === "2") {
                 verb.stem = verb.u.slice(0, -1);
             }
+
+            if (verb.group === "3") {
+
+            }
             printPage("stem", verb.stem);
         }
-        //function teConjugate() {
 
-        //What is the verb we're manipulating?
+        verb.getMasu = function () {
+            verb.masu = verb.stem + "ます";
+            printPage("masu", verb.masu);
+        }
+        verb.getTe = function () {
 
-        //Check if it's a group three verb and conjugate accordingly.
+            //Check if it's a group three verb and conjugate accordingly.
+            if (verb.group === "3" || verb.group === "2") {
+                verb.te = verb.stem + "て";
+            }
+            //Since group three verbs can possibly intended to be group one verbs, we start a new if block.
 
-        //Since group three verbs can possibly intended to be group one verbs, we start a new if block.
+
+            //We'll assume everything else that's not group one is a group two verb.
 
 
-        //We'll assume everything else that's not group one is a group two verb.
+            //Check if the verb is possibly an exception to the usual group rules. We can add more else ifs for more exceptions and use printType and specify. Use either the group one method (preMasu.change) or the group two function verb.printStemTe accordingly.
 
-
-        //Check if the verb is possibly an exception to the usual group rules. We can add more else ifs for more exceptions and use printType and specify. Use either the group one method (preMasu.change) or the group two function verb.printStemTe accordingly.
-
-        //};
-        getVerbGroup();
-        getVerbStem();
+        };
+        verb.getGroup();
+        verb.getStem();
+        verb.getMasu();
     });
 });
