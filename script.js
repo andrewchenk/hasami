@@ -46,6 +46,7 @@ $(document).ready(function () {
         verb.te = "";
         verb.teEnd = "";
         verb.negative = "";
+        verb.negativeEnd = "";
 
         printPage("u", verb.u);
 
@@ -71,7 +72,7 @@ $(document).ready(function () {
             }
 
             if (verb.group === "3") {
-
+                verb.i = hiragana.change(verb.withoutEnd, "u", "i");
             }
             printPage("i", verb.i);
         }
@@ -117,11 +118,11 @@ $(document).ready(function () {
                     console.log(verb.teEnd);
                 } else if (isInArray(hiragana.teTwo, verb.preMasu)) {
                     verb.taEnd = "った";
-                } else if (verb.preMasu = "き") {
+                } else if (verb.preMasu === "き") {
                     verb.taEnd = "いた";
-                } else if (verb.preMasu = "ぎ") {
+                } else if (verb.preMasu === "ぎ") {
                     verb.taEnd = "いだ";
-                } else if (verb.preMasu = "し") {
+                } else if (verb.preMasu === "し") {
                     verb.taEnd = "した";
                 }
                 verb.ta = verb.withoutEnd + verb.taEnd;
@@ -129,12 +130,37 @@ $(document).ready(function () {
             printPage("ta", verb.ta);
         };
 
-        verb.getNeg
+        verb.getNegative = function () {
+            if (verb.group === "3") {
+                if (verb.u === "する") {
+                    verb.negative = "しない";
+                }
+                if (verb.u === "くる") {
+                    verb.negative = "こない";
+                }
+            }
+
+            if (verb.group === "2") {
+                verb.negative = verb.i + "ない";
+            }
+
+            if (verb.group === "1") {
+                if (verb.preMasu === "い") {
+                    verb.negativeEnd = "わ"
+                } else {
+                    verb.negativeEnd = hiragana.change(verb.preMasu, "i", "a");
+                }
+                verb.negative = verb.withoutEnd + verb.negativeEnd + "ない";
+            }
+
+            printPage("negative", verb.negative);
+        }
 
         verb.getGroup();
-        verb.getStem();
+        verb.getI();
         verb.getMasu();
-        verb.getTe()
+        verb.getTe();
         verb.getTa();
+        verb.getNegative();
     });
 });
