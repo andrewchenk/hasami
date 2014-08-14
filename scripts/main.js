@@ -3,7 +3,6 @@ require(['wanakana'], function () {
         //wanakana support
         var input = document.getElementById('enter');
         wanakana.bind(input);
-
         //object of array hirigana
         //implement wakakana; fix html table
         var hiragana = {};
@@ -16,7 +15,6 @@ require(['wanakana'], function () {
         hiragana.teTwo = ["い", "ち", "り"];
         hiragana.change = function (input, initVowel, desiredVowel) {
             var x = hiragana[initVowel].indexOf(input);
-            console.log(x);
             return hiragana[desiredVowel][x];
 
         };
@@ -48,12 +46,18 @@ require(['wanakana'], function () {
             verb.masu = "";
             verb.ta = "";
             verb.taEnd = "";
+            verb.mashita = "";
+            verb.masendeshita = "";
             verb.te = "";
             verb.teEnd = "";
-            verb.negative = "";
-            verb.negativeEnd = "";
-            verb.provisional = "";
-            verb.provisionalEnd = "";
+            verb.nai = "";
+            verb.naiEnd = "";
+            verb.masen = "";
+            verb.eba = "";
+            verb.ebaEnd = "";
+            verb.eru = "";
+            verb.eruEnd = "";
+            verb.erunai = "";
 
             printPage("u", verb.u);
 
@@ -64,9 +68,12 @@ require(['wanakana'], function () {
                     verb.group = "2";
                 } else if (isInArray(hiragana.u, verb.end)) {
                     verb.group = "1";
-                } else if (isInArray(groupOneExceptions, verb.u)) {
+                }
+
+                if (isInArray(groupOneExceptions, verb.u)) {
                     verb.group = "1";
                 }
+
                 printPage("group", verb.group);
             };
 
@@ -86,11 +93,6 @@ require(['wanakana'], function () {
                 printPage("i", verb.i);
             };
 
-            verb.getMasu = function () {
-                verb.masu = verb.i + "ます";
-                printPage("masu", verb.masu);
-            };
-
             verb.getTe = function () {
 
                 //Check if it's a group three verb and conjugate accordingly.
@@ -98,10 +100,8 @@ require(['wanakana'], function () {
                     verb.te = verb.i + "て";
                 }
                 if (verb.group === "1") {
-                    console.log(verb.preMasu);
                     if (isInArray(hiragana.teOne, verb.preMasu)) {
                         verb.teEnd = "んで";
-                        console.log(verb.teEnd);
                     } else if (isInArray(hiragana.teTwo, verb.preMasu)) {
                         verb.teEnd = "って";
                     } else if (verb.preMasu === "き") {
@@ -116,68 +116,117 @@ require(['wanakana'], function () {
                 printPage("te", verb.te);
             };
 
+            verb.getNai = function () {
+                if (verb.group === "3") {
+                    if (verb.u === "する") {
+                        verb.nai = "しない";
+                    }
+                    if (verb.u === "くる") {
+                        verb.nai = "こない";
+                    }
+                }
+
+                if (verb.group === "2") {
+                    verb.nai = verb.i + "ない";
+                }
+
+                if (verb.group === "1") {
+                    if (verb.preMasu === "い") {
+                        verb.naiEnd = "わ";
+                    } else {
+                        verb.naiEnd = hiragana.change(verb.preMasu, "i", "a") + "ない";
+                    }
+                    verb.nai = verb.withoutEnd + verb.naiEnd;
+
+                    if (verb.u === "ある") {
+                        verb.nai = "ない";
+                    }
+                }
+                printPage("nai", verb.nai);
+            };
+
+            verb.getMasu = function () {
+                verb.masu = verb.i + "ます";
+                printPage("masu", verb.masu);
+            };
+
+            verb.getMasen = function () {
+                verb.masen = verb.i + "ません";
+                printPage("masen", verb.masen);
+            }
+
             verb.getTa = function () {
                 if (verb.group === "3" || verb.group === "2") {
                     verb.ta = verb.i + "た";
                 }
                 if (verb.group === "1") {
-                    console.log(verb.preMasu);
-                    if (isInArray(hiragana.teOne, verb.preMasu)) {
-                        verb.taEnd = "んだ";
-                        console.log(verb.teEnd);
-                    } else if (isInArray(hiragana.teTwo, verb.preMasu)) {
-                        verb.taEnd = "った";
-                    } else if (verb.preMasu === "き") {
-                        verb.taEnd = "いた";
-                    } else if (verb.preMasu === "ぎ") {
-                        verb.taEnd = "いだ";
-                    } else if (verb.preMasu === "し") {
-                        verb.taEnd = "した";
-                    }
+                    verb.taEnd = verb.teEnd.slice(0, -1) + "た";
+                    console.log(verb.taEnd);
                     verb.ta = verb.withoutEnd + verb.taEnd;
                 }
                 printPage("ta", verb.ta);
             };
 
-            verb.getNegative = function () {
-                if (verb.group === "3") {
-                    if (verb.u === "する") {
-                        verb.negative = "しない";
-                    }
-                    if (verb.u === "くる") {
-                        verb.negative = "こない";
-                    }
-                }
-
-                if (verb.group === "2") {
-                    verb.negative = verb.i + "ない";
-                }
-
-                if (verb.group === "1") {
-                    if (verb.preMasu === "い") {
-                        verb.negativeEnd = "わ";
-                    } else {
-                        verb.negativeEnd = hiragana.change(verb.preMasu, "i", "a");
-                    }
-                    verb.negative = verb.withoutEnd + verb.negativeEnd + "ない";
-
-                    if (verb.u === "ある") {
-                        verb.negative = "ない";
-                    }
-                }
-                printPage("negative", verb.negative);
+            verb.getMashita = function () {
+                verb.mashita = verb.i + "ました";
+                printPage("mashita", verb.mashita);
             };
 
-            verb.getProvisonal = function () {
+            verb.getMasendeshita = function () {
+                verb.masendeshita = verb.masen + " でした";
+                printPage("masendeshita", verb.masendeshita);
+            };
 
+            verb.getEba = function () {
+                if (verb.group === "3") {
+                    verb.eba = verb.withoutEnd + "れば";
+                }
+                if (verb.group === "2") {
+                    verb.eba = verb.i + "れば";
+                }
+                if (verb.group === "1") {
+                    verb.ebaEnd = hiragana.change(verb.preMasu, "i", "e") + "ば";
+                    verb.eba = verb.withoutEnd + verb.ebaEnd;
+                }
+                printPage("eba", verb.eba);
+            };
+
+            verb.getEru = function () {
+                if (verb.group === "3") {
+                    if (verb.u === "する") {
+                        verb.eru = "できる";
+                    }
+                    if (verb.u === "くる") {
+                        verb.eru = "こられる";
+                    }
+                }
+                if (verb.group === "2") {
+                    verb.eru = verb.withoutEnd + "られる";
+                }
+                if (verb.group === "1") {
+                    verb.eruEnd = hiragana.change(verb.preMasu, "i", "e") + "る";
+                    verb.eru = verb.withoutEnd + verb.eruEnd;
+                }
+                printPage("eru", verb.eru);
+            };
+
+            verb.getErunai = function () {
+                verb.erunai = verb.eru.slice(0, -1) + "ない";
+                printPage("erunai", verb.erunai);
             };
 
             verb.getGroup();
             verb.getI();
-            verb.getMasu();
             verb.getTe();
+            verb.getNai();
+            verb.getMasu();
+            verb.getMasen();
             verb.getTa();
-            verb.getNegative();
+            verb.getMashita();
+            verb.getMasendeshita();
+            verb.getEba();
+            verb.getEru();
+            verb.getErunai();
         });
     });
 });
