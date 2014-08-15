@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="css/bootstrap.min.css" />
     <link rel="stylesheet" href="css/bootstrap-flat.min.css" />
     <link rel="stylesheet" href="css/bootstrap-flat-extras.min.css" />
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="css/style.css" />
     <title>Japanese Verb Conjugator</title>
 </head>
 
@@ -24,26 +24,22 @@
         <br/>
         <table class="table table-bordered" border="1px">
             <tr>
-                <td colspan="2">GROUP</td>
+                <td colspan="1">GROUP</td>
                 <td colspan="2"><span id="group"></span>
                 </td>
             </tr>
             <tr>
-                <td colspan="2">I (STEM/INFINITIVE)</td>
+                <td colspan="1">I (STEM/INFINITIVE)</td>
                 <td colspan="2"><span id="i"></span>
                 </td>
             </tr>
             <tr>
-                <td colspan="2">TE (PROGRESSIVE)</td>
+                <td colspan="1">TE (PROGRESSIVE)</td>
                 <td colspan="2"><span id="te"></span>
                 </td>
             </tr>
-        </table>
 
-        <table class="table table-bordered" border="1px">
-
-
-            <tr>
+            <tr id="top">
                 <td></td>
                 <td>POSITIVE</td>
                 <td>NEGATIVE</td>
@@ -70,7 +66,7 @@
                 <td>TA (PAST)</td>
                 <td><span id="ta"></span> 
                 </td>
-                <td colspan="2"><span id="nakatta"></span>
+                <td><span id="nakatta"></span>
                 </td>
             </tr>
 
@@ -78,10 +74,17 @@
                 <td>MASHITA (FORMAL PAST)</td>
                 <td><span id="mashita"></span> 
                 </td>
-                <td colspan="2"><span id="masendeshita"></span>
+                <td><span id="masendeshita"></span>
                 </td>
             </tr>
 
+            <tr>
+                <td>OU (VOLITIONAL)</td>
+                <td><span id="ou"></span>
+                </td>
+                <td><span id="naidarou"></span>
+                </td>
+            </tr>
 
             <tr>
                 <td>EBA (PROVISIONAL)</td>
@@ -98,11 +101,12 @@
                 <td><span id="erunai"></span>
                 </td>
             </tr>
+
         </table>
     </div>
 
-    <script data-main="scripts/main" src="scripts/require.js"></script>
-    <script type="text/javascript" src="scripts/jquery-2.1.1.min.js"></script>
+    <script data-main="js/main" src="js/require.js"></script>
+    <script src="js/jquery-2.1.1.min.js"></script>
     <script src="js/bootstrap.js"></script>
 
 </body>

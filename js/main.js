@@ -42,17 +42,21 @@ require(['wanakana'], function () {
             verb.endTwo = verb.u.slice(-2, -1);
             verb.withoutEnd = verb.u.slice(0, -1);
             verb.i = "";
+            verb.te = "";
             verb.preMasu = "";
             verb.masu = "";
             verb.ta = "";
             verb.taEnd = "";
+            verb.nakatta = "";
             verb.mashita = "";
             verb.masendeshita = "";
-            verb.te = "";
             verb.teEnd = "";
             verb.nai = "";
             verb.naiEnd = "";
             verb.masen = "";
+            verb.ou = "";
+            verb.ouEnd = "";
+            verb.naidarou = "";
             verb.eba = "";
             verb.ebaEnd = "";
             verb.eru = "";
@@ -95,7 +99,6 @@ require(['wanakana'], function () {
 
             verb.getTe = function () {
 
-                //Check if it's a group three verb and conjugate accordingly.
                 if (verb.group === "3" || verb.group === "2") {
                     verb.te = verb.i + "て";
                 }
@@ -111,6 +114,12 @@ require(['wanakana'], function () {
                     } else if (verb.preMasu === "し") {
                         verb.teEnd = "して";
                     }
+
+                    //exception
+                    if (verb.u === "いく") {
+                        verb.teEnd = "って";
+                    }
+
                     verb.te = verb.withoutEnd + verb.teEnd;
                 }
                 printPage("te", verb.te);
@@ -167,6 +176,11 @@ require(['wanakana'], function () {
                 printPage("ta", verb.ta);
             };
 
+            verb.getNakatta = function () {
+                verb.nakatta = verb.nai.slice(0, -1) + "かった";
+                printPage("nakatta", verb.nakatta);
+            }
+
             verb.getMashita = function () {
                 verb.mashita = verb.i + "ました";
                 printPage("mashita", verb.mashita);
@@ -175,6 +189,26 @@ require(['wanakana'], function () {
             verb.getMasendeshita = function () {
                 verb.masendeshita = verb.masen + " でした";
                 printPage("masendeshita", verb.masendeshita);
+            };
+
+            verb.getOu = function () {
+                if (verb.group === "3") {
+                    verb.ou = verb.nai.slice(0, -2) + "よう";
+                }
+                if (verb.group === "2") {
+                    verb.ou = verb.i + "よう";
+                }
+                if (verb.group === "1") {
+                    verb.ouEnd = hiragana.change(verb.preMasu, "i", "o") + "う";
+                    verb.ou = verb.withoutEnd + verb.ouEnd;
+                }
+                printPage("ou", verb.ou);
+            };
+
+            verb.getNaidarou = function () {
+                verb.naidarou = verb.nai + " だろう";
+                console.log(verb.naidarou);
+                printPage("naidarou", verb.naidarou);
             };
 
             verb.getEba = function () {
@@ -189,6 +223,11 @@ require(['wanakana'], function () {
                     verb.eba = verb.withoutEnd + verb.ebaEnd;
                 }
                 printPage("eba", verb.eba);
+            };
+
+            verb.getNakereba = function () {
+                verb.nakereba = verb.nai.slice(0, -1) + "ければ";
+                printPage("nakereba", verb.nakereba);
             };
 
             verb.getEru = function () {
@@ -222,9 +261,13 @@ require(['wanakana'], function () {
             verb.getMasu();
             verb.getMasen();
             verb.getTa();
+            verb.getNakatta();
             verb.getMashita();
             verb.getMasendeshita();
+            verb.getOu();
+            verb.getNaidarou();
             verb.getEba();
+            verb.getNakereba();
             verb.getEru();
             verb.getErunai();
         });
