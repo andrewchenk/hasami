@@ -62,6 +62,8 @@ require(['wanakana'], function () {
             verb.eru = "";
             verb.eruEnd = "";
             verb.erunai = "";
+            verb.seru = "";
+            verb.seruNai = "";
 
             printPage("u", verb.u);
 
@@ -162,7 +164,7 @@ require(['wanakana'], function () {
             verb.getMasen = function () {
                 verb.masen = verb.i + "ません";
                 printPage("masen", verb.masen);
-            }
+            };
 
             verb.getTa = function () {
                 if (verb.group === "3" || verb.group === "2") {
@@ -179,7 +181,7 @@ require(['wanakana'], function () {
             verb.getNakatta = function () {
                 verb.nakatta = verb.nai.slice(0, -1) + "かった";
                 printPage("nakatta", verb.nakatta);
-            }
+            };
 
             verb.getMashita = function () {
                 verb.mashita = verb.i + "ました";
@@ -254,6 +256,54 @@ require(['wanakana'], function () {
                 printPage("erunai", verb.erunai);
             };
 
+            verb.getReru = function () {
+                if (verb.group === "3") {
+                    if (verb.u === "する") {
+                        verb.reru = "される";
+                    }
+                    if (verb.u === "くる") {
+                        verb.reru = "こらせる";
+                    }
+                }
+                if (verb.group === "2") {
+                    verb.reru = verb.eru;
+                }
+                if (verb.group === "1") {
+                    verb.reru = verb.nai.slice(0, -2) + "れる";
+                }
+                printPage("reru", verb.reru);
+            };
+
+            verb.getRerunai = function () {
+                verb.rerunai = verb.reru.slice(0, -1) + "ない";
+                printPage("rerunai", verb.rerunai);
+            };
+
+
+            verb.getSeru = function () {
+                if (verb.group === "3") {
+                    if (verb.u === "する") {
+                        verb.seru = "させる";
+                    }
+                    if (verb.u === "くる") {
+                        verb.seru = "こさせる";
+                    }
+                }
+                if (verb.group === "2") {
+                    verb.seru = verb.withoutEnd + "させる";
+                }
+                if (verb.group === "1") {
+                    verb.seru = verb.nai.slice(0, -2) + "せる";
+                }
+                printPage("seru", verb.seru);
+            };
+
+            verb.getSerunai = function () {
+                verb.serunai = verb.seru.slice(0, -1) + "ない";
+                printPage("serunai", verb.serunai);
+            };
+
+
             verb.getGroup();
             verb.getI();
             verb.getTe();
@@ -270,6 +320,11 @@ require(['wanakana'], function () {
             verb.getNakereba();
             verb.getEru();
             verb.getErunai();
+            verb.getSeru();
+            verb.getSerunai();
+            verb.getReru();
+            verb.getRerunai();
+
         });
     });
 });

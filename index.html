@@ -14,16 +14,36 @@
 <body>
 
     <div class="container">
-        <br/>
+        <!-- Static navbar -->
+        <div class="navbar navbar-default" role="navigation">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">Japanese Verb Conjugator</a>
+                </div>
+            </div>
+            <!--/.container-fluid -->
+        </div>
+
         <form>
             Enter your verb here in dictionary form:
             <input type="text" class="input-sm" id="enter"></input>
             <br/>
             <input type="button" class="btn btn-default" id="submit" value="Conjugate"></input>
+            <br/>
+            <input type="radio" value="male">Romaji
+            <input type="radio" value="female">Kana
         </form>
+
+
         <br/>
-        <table class="table table-bordered" border="1px">
-            <tr>
+        <table class="table table-bordered" wid border="1px">
+            <tr class="top">
                 <td colspan="1">GROUP</td>
                 <td colspan="2"><span id="group"></span>
                 </td>
@@ -39,7 +59,7 @@
                 </td>
             </tr>
 
-            <tr id="top">
+            <tr class="top">
                 <td></td>
                 <td>POSITIVE</td>
                 <td>NEGATIVE</td>
@@ -95,12 +115,30 @@
             </tr>
 
             <tr>
-                <td>ERU (CONDITIONAL)</td>
+                <td>ERU (POTENTIAL)</td>
                 <td><span id="eru"></span>
                 </td>
                 <td><span id="erunai"></span>
                 </td>
             </tr>
+
+            <tr>
+                <td>RERU (PASSIVE)</td>
+                <td><span id="reru"></span>
+                </td>
+                <td><span id="rerunai"></span>
+                </td>
+            </tr>
+
+            <tr>
+                <td>SERU (CAUSATIVE)</td>
+                <td><span id="seru"></span>
+                </td>
+                <td><span id="serunai"></span>
+                </td>
+            </tr>
+
+
 
         </table>
     </div>
