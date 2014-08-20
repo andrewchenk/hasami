@@ -1,8 +1,6 @@
 require(['wanakana'], function () {
     $(document).ready(function () {
-        //wanakana support
-        var input = document.getElementById('enter');
-        wanakana.bind(input);
+
         //object of array hirigana
         //implement wakakana; fix html table
         var hiragana = {};
@@ -32,8 +30,24 @@ require(['wanakana'], function () {
             $("#" + id).replaceWith("<span id = " + id + ">" + input + "</span>");
         }
 
+        var input = document.getElementById('enter');
+
+        $('input:radio[name=display]').change(function () {
+            if ($(this).val() === 'Hiragana') {
+                //wanakana support
+                wanakana.bind(input);
+                alert("yes!");
+            }
+
+            if ($(this).val() === 'Romaji') {
+                wanakana.unbind(input);
+                alert("no!");
+            }
+        })
+
         //Click the button to get the form value.
         $("#submit").click(function () {
+
             var verb = {};
             //put an if check here for masu? LATER
             verb.group = "";
