@@ -1,85 +1,89 @@
-require(['wanakana'], function () {
+require(["wanakana"], function () {
     $(document).ready(function () {
 
         //hiragana table
-        var hiragana = {};
-        hiragana.a = ["あ", "か", "さ", "た", "な", "は", "ま", "や", "ら", "わ", "が", "ざ", "だ", "ば", "ぱ"];
-        hiragana.i = ["い", "き", "し", "ち", "に", "ひ", "み", " ", "り", " ", "ぎ", "じ", "ぢ", "び", "ぴ"];
-        hiragana.u = ["う", "く", "す", "つ", "ぬ", "ふ", "む", "ゆ", "る", " ", "ぐ", "ず", "づ", "ぶ", "ぷ"];
-        hiragana.e = ["え", "け", "せ", "て", "ね", "へ", "め", " ", "れ", " ", 　"げ", "ぜ", "で", "べ", "ぺ"];
-        hiragana.o = ["お", "こ", "そ", "と", "の", "ほ", "も", "よ", "ろ", "を", "ご", "ぞ", "ど", "ぼ", "ぽ"];
-        hiragana.teOne = ["み", "に", "び"];
-        hiragana.teTwo = ["い", "ち", "り"];
-        hiragana.change = function (input, initVowel, desiredVowel) {
-            var x = hiragana[initVowel].indexOf(input);
-            return hiragana[desiredVowel][x];
+        var hiragana = {
+            a: ["あ", "か", "さ", "た", "な", "は", "ま", "や", "ら", "わ", "が", "ざ", "だ", "ば", "ぱ"],
+            i: ["い", "き", "し", "ち", "に", "ひ", "み", " ", "り", " ", "ぎ", "じ", "ぢ", "び", "ぴ"],
+            u: ["う", "く", "す", "つ", "ぬ", "ふ", "む", "ゆ", "る", " ", "ぐ", "ず", "づ", "ぶ", "ぷ"],
+            e: ["え", "け", "せ", "て", "ね", "へ", "め", " ", "れ", " ", 　"げ", "ぜ", "で", "べ", "ぺ"],
+            o: ["お", "こ", "そ", "と", "の", "ほ", "も", "よ", "ろ", "を", "ご", "ぞ", "ど", "ぼ", "ぽ"],
+            teOne: ["み", "に", "び"],
+            teTwo: ["い", "ち", "り"],
+            change: function (input, initVowel, desiredVowel) {
+                var x = hiragana[initVowel].indexOf(input);
+                return hiragana[desiredVowel][x];
+            }
         };
 
-        var groupOneExceptions = ["はいる", "はしる", "かえる", "かぎる", "きる", "しゃべる", "しる"];
+        var groupOneExceptions = ["はいる", "はしる", "かえる", "かぎる", "きる", "しゃべる", "しる", "いる"];
         var groupThree = ["くる", "する"];
-        var homophone = ["いる"];
+        var existence = ["いる", "ある", "です"];
+
         //check if in array
         function isInArray(array, search) {
             return array.indexOf(search) >= 0;
         }
 
         //add input to the page
-        function printPage(id, input) {
-            $("#" + id).replaceWith("<span id = " + id + ">" + input + "</span>");
+        function printPage(id, value) {
+            $("#" + id).replaceWith("<span id = " + id + ">" + value + "</span>");
         }
 
-        var input = document.getElementById('enter');
+        var input = document.getElementById("input");
         wanakana.bind(input);
 
-        $('input:radio[name=display]').change(function () {
-            if ($(this).val() === 'Hiragana') {
+        $("input:radio[name=input-method]").change(function () {
+            if ($(this).val() === "Hiragana") {
                 //wanakana support
                 wanakana.bind(input);
+                $("#input").attr("placeholder", "たべる");
             }
 
-            if ($(this).val() === 'Romaji') {
+            if ($(this).val() === "Romaji") {
                 wanakana.unbind(input);
+                $("#input").attr("placeholder", "taberu");
             }
         });
 
         //Click the button to get the form value.
         $("#submit").click(function () {
 
-            var verb = {};
-            //put an if check here for masu? LATER
-            verb.group = "";
-            verb.u = $('#enter').val();
-            verb.end = "";
-            verb.endTwo = "";
-            verb.withoutEnd = "";
-            verb.i = "";
-            verb.te = "";
-            verb.preMasu = "";
-            verb.masu = "";
-            verb.ta = "";
-            verb.taEnd = "";
-            verb.nakatta = "";
-            verb.mashita = "";
-            verb.masendeshita = "";
-            verb.teEnd = "";
-            verb.nai = "";
-            verb.naiEnd = "";
-            verb.masen = "";
-            verb.ou = "";
-            verb.ouEnd = "";
-            verb.naidarou = "";
-            verb.eba = "";
-            verb.ebaEnd = "";
-            verb.eru = "";
-            verb.eruEnd = "";
-            verb.erunai = "";
-            verb.seru = "";
-            verb.seruNai = "";
-            verb.reru = "";
-            verb.reruNai = "";
+            var verb = {
+                //put an if check here for masu? LATER
+                group: "",
+                u: $("#input").val(),
+                end: "",
+                endTwo: "",
+                withoutEnd: "",
+                i: "",
+                te: "",
+                preMasu: "",
+                masu: "",
+                ta: "",
+                taEnd: "",
+                nakatta: "",
+                mashita: "",
+                masendeshita: "",
+                teEnd: "",
+                nai: "",
+                naiEnd: "",
+                masen: "",
+                ou: "",
+                ouEnd: "",
+                naidarou: "",
+                eba: "",
+                ebaEnd: "",
+                eru: "",
+                eruEnd: "",
+                erunai: "",
+                seru: "",
+                seruNai: "",
+                reru: "",
+                reruNai: ""
+            };
 
             verb.getInit = function () {
-
                 verb.end = verb.u.slice(-1);
                 verb.endTwo = verb.u.slice(-2, -1);
                 verb.withoutEnd = verb.u.slice(0, -1);
@@ -322,7 +326,7 @@ require(['wanakana'], function () {
                 var prop = "";
                 for (prop in verb) {
                     if (typeof verb[prop] === "string") {
-                        if (wanakana.isKana($('#enter').val()) === false) {
+                        if (wanakana.isKana($("#input").val()) === false) {
                             verb[prop] = wanakana.toRomaji(verb[prop]);
                         }
                         printPage(prop, verb[prop]);
@@ -333,6 +337,10 @@ require(['wanakana'], function () {
             verb.check = function () {
                 if (wanakana.isKana(verb.u) === false) {
                     verb.u = wanakana.toHiragana(verb.u);
+                }
+
+                if (isInArray(existence, verb.u)) {
+                    $("#forms").append("<p>If you meant the existence verb, refer here:</p>");
                 }
 
             };

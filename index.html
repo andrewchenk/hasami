@@ -51,28 +51,30 @@
     <div class="bs-masthead" id="content">
         <div class="container">
             <h1>Hasami Conjugator</h1>
-            <p class="lead">Pepperoni is the answer.</p>
+            <p class="lead">The <em>Won</em> conjugator you need.</p>
         </div>
     </div>
     <br/>
 
-    <div class="container">
+    <div id="forms" class="container">
         <form>
-            Enter your verb here in dictionary form:
-            <input type="text" class="input-sm" id="enter"></input>
+            Enter your verb here in plain (dictionary) form:
+            <input type="text" class="input-sm" id="input" placeholder="たべる"></input>
             <div class="radio">
                 <label>
-                    <input type="radio" name="display" value="Hiragana" />Hiragana
+                    <input type="radio" name="input-method" value="Hiragana" checked />Hiragana
                 </label>
             </div>
             <div class="radio">
                 <label>
-                    <input type="radio" name="display" value="Romaji" />Romaji
+                    <input type="radio" name="input-method" value="Romaji" />Romaji
                 </label>
             </div>
             <input type="button" class="btn btn-default" id="submit" value="Conjugate"></input>
         </form>
+    </div>
 
+    <div id="table" class="container">
         <br/>
         <table class="table table-bordered" wid border="1px">
             <tr class="top">
@@ -170,6 +172,12 @@
                 </td>
             </tr>
         </table>
+    </div>
+
+    <div class="footer">
+        <div class="container">
+            <p class="text-muted">Wanakana, JQuery, RequireJS, Bootstrap</p>
+        </div>
     </div>
 
     <script data-main="js/main" src="js/require.js"></script>
