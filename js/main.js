@@ -1,8 +1,7 @@
 require(['wanakana'], function () {
     $(document).ready(function () {
 
-        //object of array hirigana
-        //implement wakakana; fix html table
+        //hiragana table
         var hiragana = {};
         hiragana.a = ["あ", "か", "さ", "た", "な", "は", "ま", "や", "ら", "わ", "が", "ざ", "だ", "ば", "ぱ"];
         hiragana.i = ["い", "き", "し", "ち", "に", "ひ", "み", " ", "り", " ", "ぎ", "じ", "ぢ", "び", "ぴ"];
@@ -14,12 +13,11 @@ require(['wanakana'], function () {
         hiragana.change = function (input, initVowel, desiredVowel) {
             var x = hiragana[initVowel].indexOf(input);
             return hiragana[desiredVowel][x];
-
         };
 
         var groupOneExceptions = ["はいる", "はしる", "かえる", "かぎる", "きる", "しゃべる", "しる"];
         var groupThree = ["くる", "する"];
-
+        var homophone = ["いる"];
         //check if in array
         function isInArray(array, search) {
             return array.indexOf(search) >= 0;
@@ -336,6 +334,7 @@ require(['wanakana'], function () {
                 if (wanakana.isKana(verb.u) === false) {
                     verb.u = wanakana.toHiragana(verb.u);
                 }
+
             };
 
             verb.conjugate = function () {

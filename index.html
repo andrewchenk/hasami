@@ -13,37 +13,64 @@
 
 <body>
 
-    <div class="container">
-        <!-- Static navbar -->
-        <div class="navbar navbar-default" role="navigation">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="#">Japanese Verb Conjugator</a>
-                </div>
+    <!-- Static navbar -->
+    <div class="navbar navbar-default navbar-static-top" role="banner">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Hasami</a>
             </div>
-            <!--/.container-fluid -->
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="#">Home</a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Conjugation <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="#">How to Conjugate</a>
+                            </li>
+                            <li class="active"><a href="#">Conjugator</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="https://github.com/cardboardtheory/japaneseVerbConjugate">Github</a>
+                    </li>
+                </ul>
+            </div>
+            <!--/.nav-collapse -->
         </div>
+    </div>
 
+    <div class="bs-masthead" id="content">
+        <div class="container">
+            <h1>Hasami Conjugator</h1>
+            <p class="lead">Pepperoni is the answer.</p>
+        </div>
+    </div>
+    <br/>
+
+    <div class="container">
         <form>
             Enter your verb here in dictionary form:
             <input type="text" class="input-sm" id="enter"></input>
-            <br/>
+            <div class="radio">
+                <label>
+                    <input type="radio" name="display" value="Hiragana" />Hiragana
+                </label>
+            </div>
+            <div class="radio">
+                <label>
+                    <input type="radio" name="display" value="Romaji" />Romaji
+                </label>
+            </div>
             <input type="button" class="btn btn-default" id="submit" value="Conjugate"></input>
-            <br/>
-
-            <input type="radio" name="display" value="Hiragana" checked />Hiragana
-            <br/>
-            <input type="radio" name="display" value="Romaji" />Romaji
-            <br/>
-            <input type="radio" name="display" value="Moses" />Moses
-            <br/>
-
         </form>
 
         <br/>
@@ -142,9 +169,6 @@
                 <td><span id="serunai"></span>
                 </td>
             </tr>
-
-
-
         </table>
     </div>
 
