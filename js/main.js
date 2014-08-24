@@ -18,7 +18,7 @@ require(["wanakana"], function () {
 
         var groupOneExceptions = ["はいる", "はしる", "かえる", "かぎる", "きる", "しゃべる", "しる", "いる"];
         var groupThree = ["くる", "する"];
-        var existence = ["いる", "ある", "です"];
+        var existence = [["いる", "ある"], ["です"]];
 
         //check if in array
         function isInArray(array, search) {
@@ -27,7 +27,7 @@ require(["wanakana"], function () {
 
         //add input to the page
         function printPage(id, value) {
-            $("#" + id).replaceWith("<span id = " + id + ">" + value + "</span>");
+            $("#" + id).replaceWith("<div id = " + id + ">" + value + "</span>");
         }
 
         var input = document.getElementById("input");
@@ -323,6 +323,12 @@ require(["wanakana"], function () {
             };
 
             verb.process = function () {
+                if (isInArray(existence[0], verb.u)) {
+                    printPage("existence", "<div class=\"bs-callout bs-callout-info\"> If you were referring to the existence copula " + verb.u + " (to be), refer here.</div>");
+                } else if (isInArray(existence[1], verb.u)) {
+                    printPage("existence", "<div class=\"bs-callout bs-callout-info\"> If you were referring to the existence copula " + verb.u + " (is), refer here.</div>");
+                }
+
                 var prop = "";
                 for (prop in verb) {
                     if (typeof verb[prop] === "string") {
@@ -335,12 +341,9 @@ require(["wanakana"], function () {
             };
 
             verb.check = function () {
+                printPage("existence", "");
                 if (wanakana.isKana(verb.u) === false) {
                     verb.u = wanakana.toHiragana(verb.u);
-                }
-
-                if (isInArray(existence, verb.u)) {
-                    $("#forms").append("<p>If you meant the existence verb, refer here:</p>");
                 }
 
             };
