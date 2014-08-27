@@ -1,95 +1,126 @@
-require(["wanakana"], function () {
-    $(document).ready(function () {
+$(document).ready(function () {
 
-        //hiragana table
-        var hiragana = {
-            a: ["あ", "か", "さ", "た", "な", "は", "ま", "や", "ら", "わ", "が", "ざ", "だ", "ば", "ぱ"],
-            i: ["い", "き", "し", "ち", "に", "ひ", "み", " ", "り", " ", "ぎ", "じ", "ぢ", "び", "ぴ"],
-            u: ["う", "く", "す", "つ", "ぬ", "ふ", "む", "ゆ", "る", " ", "ぐ", "ず", "づ", "ぶ", "ぷ"],
-            e: ["え", "け", "せ", "て", "ね", "へ", "め", " ", "れ", " ", 　"げ", "ぜ", "で", "べ", "ぺ"],
-            o: ["お", "こ", "そ", "と", "の", "ほ", "も", "よ", "ろ", "を", "ご", "ぞ", "ど", "ぼ", "ぽ"],
-            teOne: ["み", "に", "び"],
-            teTwo: ["い", "ち", "り"],
-            change: function (input, initVowel, desiredVowel) {
-                var x = hiragana[initVowel].indexOf(input);
-                return hiragana[desiredVowel][x];
-            }
+    //hiragana table
+    var hiragana = {
+        a: ["あ", "か", "さ", "た", "な", "は", "ま", "や", "ら", "わ", "が", "ざ", "だ", "ば", "ぱ"],
+        i: ["い", "き", "し", "ち", "に", "ひ", "み", " ", "り", " ", "ぎ", "じ", "ぢ", "び", "ぴ"],
+        u: ["う", "く", "す", "つ", "ぬ", "ふ", "む", "ゆ", "る", " ", "ぐ", "ず", "づ", "ぶ", "ぷ"],
+        e: ["え", "け", "せ", "て", "ね", "へ", "め", " ", "れ", " ", 　"げ", "ぜ", "で", "べ", "ぺ"],
+        o: ["お", "こ", "そ", "と", "の", "ほ", "も", "よ", "ろ", "を", "ご", "ぞ", "ど", "ぼ", "ぽ"],
+        teOne: ["み", "に", "び"],
+        teTwo: ["い", "ち", "り"],
+        change: function (input, initVowel, desiredVowel) {
+            var x = hiragana[initVowel].indexOf(input);
+            return hiragana[desiredVowel][x];
+        }
+    };
+
+    var groupOneExceptions = ["はいる", "はしる", "かえる", "かぎる", "きる", "しゃべる", "しる", "いる"];
+    var groupThree = ["くる", "する"];
+    var existence = [["いる", "ある"], ["です"]];
+
+    //check if in array
+    function isInArray(array, search) {
+        return array.indexOf(search) >= 0;
+    }
+
+    //add input to the page
+    function printPage(id, value) {
+        $("#" + id).replaceWith("<div id = " + id + ">" + value + "</span>");
+    }
+
+    //bind input to wanakana on page load
+    var input = document.getElementById("input");
+    wanakana.bind(input);
+
+    //check radio buttons and enact changes on enter form
+    $("input:radio[name=input-method]").change(function () {
+        if ($(this).val() === "Hiragana") {
+            //wanakana support
+            wanakana.bind(input);
+            $("#input").attr("placeholder", "たべる");
+        }
+
+        if ($(this).val() === "Romaji") {
+            wanakana.unbind(input);
+            $("#input").attr("placeholder", "taberu");
+        }
+    });
+
+    //Click the button to get the form value.
+    $("#submit").click(function () {
+
+        var verb = {
+            //put an if check here for masu? LATER
+            group: "",
+            u: $("#input").val(),
+            end: "",
+            endTwo: "",
+            withoutEnd: "",
+            i: "",
+            te: "",
+            preMasu: "",
+            masu: "",
+            ta: "",
+            taEnd: "",
+            nakatta: "",
+            mashita: "",
+            masendeshita: "",
+            teEnd: "",
+            nai: "",
+            naiEnd: "",
+            masen: "",
+            ou: "",
+            ouEnd: "",
+            naidarou: "",
+            eba: "",
+            ebaEnd: "",
+            nakereba: "",
+            eru: "",
+            eruEnd: "",
+            erunai: "",
+            seru: "",
+            serunai: "",
+            reru: "",
+            rerunai: ""
         };
 
-        var groupOneExceptions = ["はいる", "はしる", "かえる", "かぎる", "きる", "しゃべる", "しる", "いる"];
-        var groupThree = ["くる", "する"];
-        var existence = [["いる", "ある"], ["です"]];
+        var init = (function () {
+            printPage("callout", "");
+            //clear table
 
-        //check if in array
-        function isInArray(array, search) {
-            return array.indexOf(search) >= 0;
-        }
-
-        //add input to the page
-        function printPage(id, value) {
-            $("#" + id).replaceWith("<div id = " + id + ">" + value + "</span>");
-        }
-
-        var input = document.getElementById("input");
-        wanakana.bind(input);
-
-        $("input:radio[name=input-method]").change(function () {
-            if ($(this).val() === "Hiragana") {
-                //wanakana support
-                wanakana.bind(input);
-                $("#input").attr("placeholder", "たべる");
+            for (prop in verb) {
+                if (typeof verb[prop] === "string") {
+                    printPage(prop, "");
+                }
             }
 
-            if ($(this).val() === "Romaji") {
-                wanakana.unbind(input);
-                $("#input").attr("placeholder", "taberu");
+            //init verb.u for hiragana processing
+            if (wanakana.isKana(verb.u) === false) {
+                verb.u = wanakana.toHiragana(verb.u);
             }
-        });
 
-        //Click the button to get the form value.
-        $("#submit").click(function () {
+            //do some initial slicing
+            verb.end = verb.u.slice(-1);
+            verb.endTwo = verb.u.slice(-2, -1);
+            verb.withoutEnd = verb.u.slice(0, -1);
 
-            var verb = {
-                //put an if check here for masu? LATER
-                group: "",
-                u: $("#input").val(),
-                end: "",
-                endTwo: "",
-                withoutEnd: "",
-                i: "",
-                te: "",
-                preMasu: "",
-                masu: "",
-                ta: "",
-                taEnd: "",
-                nakatta: "",
-                mashita: "",
-                masendeshita: "",
-                teEnd: "",
-                nai: "",
-                naiEnd: "",
-                masen: "",
-                ou: "",
-                ouEnd: "",
-                naidarou: "",
-                eba: "",
-                ebaEnd: "",
-                eru: "",
-                eruEnd: "",
-                erunai: "",
-                seru: "",
-                seruNai: "",
-                reru: "",
-                reruNai: ""
-            };
+            if (isInArray(hiragana.u, verb.end) === false) {
+                printPage("callout", "<div class=\"bs-callout bs-callout-danger\"> It doesn't look like " + verb.u + " is a valid Japanese verb in plain form. Try something that ends with an \"u\".</div>");
+            }
 
-            verb.getInit = function () {
-                verb.end = verb.u.slice(-1);
-                verb.endTwo = verb.u.slice(-2, -1);
-                verb.withoutEnd = verb.u.slice(0, -1);
-            };
+            if (isInArray(existence[0], verb.u)) {
+                printPage("callout", "<div class=\"bs-callout bs-callout-info\"> If you were referring to the existence construct " + verb.u + " (to be), refer here.</div>");
+            } else if (isInArray(existence[1], verb.u)) {
+                printPage("callout", "<div class=\"bs-callout bs-callout-info\"> If you were referring to the existence construct " + verb.u + " (is), refer here.</div>");
+            }
 
-            verb.getGroup = function () {
+        })();
+
+        if (isInArray(hiragana.u, verb.end)) {
+
+            verb.getGroup = (function () {
+
                 if (isInArray(groupThree, verb.u)) {
                     verb.group = "3";
                 } else if (verb.end === "る" && (isInArray(hiragana.i, verb.endTwo) || isInArray(hiragana.e, verb.endTwo))) {
@@ -101,9 +132,9 @@ require(["wanakana"], function () {
                 if (isInArray(groupOneExceptions, verb.u)) {
                     verb.group = "1";
                 }
-            };
+            })();
 
-            verb.getI = function () {
+            verb.getI = (function () {
                 if (verb.group === "1") {
                     verb.preMasu = hiragana.change(verb.end, "u", "i");
                     verb.i = verb.u.slice(0, -1) + verb.preMasu;
@@ -117,9 +148,9 @@ require(["wanakana"], function () {
                     verb.i = hiragana.change(verb.withoutEnd, "u", "i");
                 }
 
-            };
+            })();
 
-            verb.getTe = function () {
+            verb.getTe = (function () {
 
                 if (verb.group === "3" || verb.group === "2") {
                     verb.te = verb.i + "て";
@@ -145,9 +176,9 @@ require(["wanakana"], function () {
                     verb.te = verb.withoutEnd + verb.teEnd;
                 }
 
-            };
+            })();
 
-            verb.getNai = function () {
+            verb.getNai = (function () {
                 if (verb.group === "3") {
                     if (verb.u === "する") {
                         verb.nai = "しない";
@@ -174,46 +205,45 @@ require(["wanakana"], function () {
                     }
                 }
 
-            };
+            })();
 
-            verb.getMasu = function () {
+            verb.getMasu = (function () {
                 verb.masu = verb.i + "ます";
 
-            };
+            })();
 
-            verb.getMasen = function () {
+            verb.getMasen = (function () {
                 verb.masen = verb.i + "ません";
 
-            };
+            })();
 
-            verb.getTa = function () {
+            verb.getTa = (function () {
                 if (verb.group === "3" || verb.group === "2") {
                     verb.ta = verb.i + "た";
                 }
                 if (verb.group === "1") {
-                    verb.taEnd = verb.teEnd.slice(0, -1) + "た";
-                    console.log(verb.taEnd);
+                    verb.taEnd = verb.teEnd.slice(0, -1) + hiragana.change(verb.teEnd.slice(-1), "e", "a");
                     verb.ta = verb.withoutEnd + verb.taEnd;
                 }
 
-            };
+            })();
 
-            verb.getNakatta = function () {
+            verb.getNakatta = (function () {
                 verb.nakatta = verb.nai.slice(0, -1) + "かった";
 
-            };
+            })();
 
-            verb.getMashita = function () {
+            verb.getMashita = (function () {
                 verb.mashita = verb.i + "ました";
 
-            };
+            })();
 
-            verb.getMasendeshita = function () {
+            verb.getMasendeshita = (function () {
                 verb.masendeshita = verb.masen + " でした";
 
-            };
+            })();
 
-            verb.getOu = function () {
+            verb.getOu = (function () {
                 if (verb.group === "3") {
                     verb.ou = verb.nai.slice(0, -2) + "よう";
                 }
@@ -225,14 +255,14 @@ require(["wanakana"], function () {
                     verb.ou = verb.withoutEnd + verb.ouEnd;
                 }
 
-            };
+            })();
 
-            verb.getNaidarou = function () {
+            verb.getNaidarou = (function () {
                 verb.naidarou = verb.nai + " だろう";
 
-            };
+            })();
 
-            verb.getEba = function () {
+            verb.getEba = (function () {
                 if (verb.group === "3") {
                     verb.eba = verb.withoutEnd + "れば";
                 }
@@ -244,14 +274,13 @@ require(["wanakana"], function () {
                     verb.eba = verb.withoutEnd + verb.ebaEnd;
                 }
 
-            };
+            })();
 
-            verb.getNakereba = function () {
+            verb.getNakereba = (function () {
                 verb.nakereba = verb.nai.slice(0, -1) + "ければ";
+            })();
 
-            };
-
-            verb.getEru = function () {
+            verb.getEru = (function () {
                 if (verb.group === "3") {
                     if (verb.u === "する") {
                         verb.eru = "できる";
@@ -268,14 +297,13 @@ require(["wanakana"], function () {
                     verb.eru = verb.withoutEnd + verb.eruEnd;
                 }
 
-            };
+            })();
 
-            verb.getErunai = function () {
+            verb.getErunai = (function () {
                 verb.erunai = verb.eru.slice(0, -1) + "ない";
+            })();
 
-            };
-
-            verb.getReru = function () {
+            verb.getReru = (function () {
                 if (verb.group === "3") {
                     if (verb.u === "する") {
                         verb.reru = "される";
@@ -290,16 +318,13 @@ require(["wanakana"], function () {
                 if (verb.group === "1") {
                     verb.reru = verb.nai.slice(0, -2) + "れる";
                 }
+            })();
 
-            };
-
-            verb.getRerunai = function () {
+            verb.getRerunai = (function () {
                 verb.rerunai = verb.reru.slice(0, -1) + "ない";
+            })();
 
-            };
-
-
-            verb.getSeru = function () {
+            verb.getSeru = (function () {
                 if (verb.group === "3") {
                     if (verb.u === "する") {
                         verb.seru = "させる";
@@ -315,21 +340,16 @@ require(["wanakana"], function () {
                     verb.seru = verb.nai.slice(0, -2) + "せる";
                 }
 
-            };
+            })();
 
-            verb.getSerunai = function () {
+            verb.getserunai = (function () {
                 verb.serunai = verb.seru.slice(0, -1) + "ない";
+            })();
 
-            };
-
-            verb.process = function () {
-                if (isInArray(existence[0], verb.u)) {
-                    printPage("existence", "<div class=\"bs-callout bs-callout-info\"> If you were referring to the existence copula " + verb.u + " (to be), refer here.</div>");
-                } else if (isInArray(existence[1], verb.u)) {
-                    printPage("existence", "<div class=\"bs-callout bs-callout-info\"> If you were referring to the existence copula " + verb.u + " (is), refer here.</div>");
-                }
+            verb.process = (function () {
 
                 var prop = "";
+                //goes through verb object, checks for romaji, prints page
                 for (prop in verb) {
                     if (typeof verb[prop] === "string") {
                         if (wanakana.isKana($("#input").val()) === false) {
@@ -338,44 +358,7 @@ require(["wanakana"], function () {
                         printPage(prop, verb[prop]);
                     } //string
                 } //for in
-            };
-
-            verb.check = function () {
-                printPage("existence", "");
-                if (wanakana.isKana(verb.u) === false) {
-                    verb.u = wanakana.toHiragana(verb.u);
-                }
-
-            };
-
-            verb.conjugate = function () {
-                verb.getInit();
-                verb.getGroup();
-                verb.getI();
-                verb.getTe();
-                verb.getNai();
-                verb.getMasu();
-                verb.getMasen();
-                verb.getTa();
-                verb.getNakatta();
-                verb.getMashita();
-                verb.getMasendeshita();
-                verb.getOu();
-                verb.getNaidarou();
-                verb.getEba();
-                verb.getNakereba();
-                verb.getEru();
-                verb.getErunai();
-                verb.getSeru();
-                verb.getSerunai();
-                verb.getReru();
-                verb.getRerunai();
-            };
-
-            verb.check();
-            verb.conjugate();
-            verb.process();
-
-        });
+            })();
+        }
     });
 });

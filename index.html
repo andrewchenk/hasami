@@ -30,9 +30,11 @@
                     <li class="active"><a href="#">Home</a>
                     </li>
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Conjugation <span class="caret"></span></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Info <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
-                            <li><a href="#">How to Conjugate</a>
+                            <li><a href="#">Verbs</a>
+                            </li>
+                            <li><a href="#">Conjugations </a>
                             </li>
                             <li><a href="#">Existence </a>
                             </li>
@@ -75,7 +77,7 @@
     </div>
 
     <div class="container">
-        <div id="existence">
+        <div id="callout">
             </span>
         </div>
 
@@ -109,7 +111,9 @@
 
 
                 <tr>
-                    <td>U (PLAIN)</td>
+                    <td>U (PLAIN/DICTIONARY)
+                        <span class="text-muted">A informal form used for casual situations, e.g. talking to friends.</span>
+                    </td>
                     <td>
                         <div id="u"></div>
                     </td>
@@ -119,7 +123,9 @@
                 </tr>
 
                 <tr>
-                    <td>MASU (FORMAL)</td>
+                    <td>MASU (FORMAL)
+                        <span class="text-muted">A formal form used for polite situations, e.g. talking to superiors.</span>
+                    </td>
                     <td>
                         <div id="masu"></div>
                     </td>
@@ -129,7 +135,9 @@
                 </tr>
 
                 <tr>
-                    <td>TA (PAST)</td>
+                    <td>TA (PAST)
+                        <span class="text-muted">A informal past form used for casual situations.</span>
+                    </td>
                     <td>
                         <div id="ta"></div>
                     </td>
@@ -139,9 +147,13 @@
                 </tr>
 
                 <tr>
-                    <td>MASHITA (FORMAL PAST)</td>
+                    <td>MASHITA (FORMAL PAST)
+                        <span class="text-muted">A formal past form used for polite situations.</span>
+                    </td>
                     <td>
-                        <div id="mashita"></div>
+                        <div id="mashita">
+
+                        </div>
                     </td>
                     <td>
                         <div id="masendeshita"></div>
@@ -149,7 +161,9 @@
                 </tr>
 
                 <tr>
-                    <td>OU (VOLITIONAL)</td>
+                    <td>OU (VOLITIONAL)
+                        <span class="text-muted">A invitational form used to propose, equivalent to "Let's <em>verb</em>".</span>
+                    </td>
                     <td>
                         <div id="ou"></div>
                     </td>
@@ -159,7 +173,9 @@
                 </tr>
 
                 <tr>
-                    <td>EBA (PROVISIONAL)</td>
+                    <td>EBA (PROVISIONAL)
+                        <span class="text-muted">A logical form used to denote consequence, equivalent to "If <em>verb</em>".</span>
+                    </td>
                     <td>
                         <div id="eba"></div>
                     </td>
@@ -169,7 +185,9 @@
                 </tr>
 
                 <tr>
-                    <td>ERU (POTENTIAL)</td>
+                    <td>ERU (POTENTIAL)
+                        <span class="text-muted">A logical form used to denote ability, equivalent to "Can <em>verb</em>".</span>
+                    </td>
                     <td>
                         <div id="eru"></div>
                     </td>
@@ -179,7 +197,9 @@
                 </tr>
 
                 <tr>
-                    <td>RERU (PASSIVE)</td>
+                    <td>RERU (PASSIVE)
+                        <span class="text-muted">A form equivalent to "Can <em>verb</em>".</span>
+                    </td>
                     <td>
                         <div id="reru"></div>
                     </td>
@@ -206,9 +226,10 @@
             </div>
         </div>
 
-        <script data-main="js/main" src="js/require.js"></script>
-        <script src="js/jquery-2.1.1.min.js"></script>
-        <script src="js/bootstrap.js"></script>
+        <script type="text/javascript" src="js/lib/jquery-2.1.1.min.js"></script>
+        <script type="text/javascript" src="js/lib/bootstrap.min.js"></script>
+        <script type="text/javascript" src="js/lib/wanakana.js"></script>
+        <script type="text/javascript" src="js/main.js"></script>
 
 </body>
 
