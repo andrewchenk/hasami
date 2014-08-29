@@ -14,7 +14,7 @@
 <body>
 
     <!-- Static navbar -->
-    <div class="navbar navbar-default navbar-static-top" role="banner">
+    <div class="navbar navbar-default navbar-static-top" role="navigation">
         <div class="container-fluid">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -29,16 +29,7 @@
                 <ul class="nav navbar-nav">
                     <li class="active"><a href="#">Home</a>
                     </li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Info <span class="caret"></span></a>
-                        <ul class="dropdown-menu" role="menu">
-                            <li><a href="#">Verbs</a>
-                            </li>
-                            <li><a href="#">Conjugations </a>
-                            </li>
-                            <li><a href="#">Existence </a>
-                            </li>
-                        </ul>
+                    <li><a href="existence.html">Existence</a>
                     </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
@@ -50,7 +41,7 @@
         </div>
     </div>
 
-    <div class="bs-masthead" id="content">
+    <div class="bs-masthead">
         <div class="container">
             <h1>Hasami Verb Conjugator</h1>
             <p class="lead">The <em>Won</em> conjugator you need.</p>
@@ -78,159 +69,154 @@
 
     <div class="container">
         <div id="callout">
-            </span>
         </div>
+    </div>
 
-        <div id="table" class="container">
-            <br/>
-            <table class="table table-bordered" wid border="1px">
-                <tr class="top">
-                    <td colspan="1">GROUP</td>
-                    <td colspan="2">
-                        <div id="group"></div>
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="1">I (STEM/INFINITIVE)</td>
-                    <td colspan="2">
-                        <div id="i"></div>
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="1">TE (PROGRESSIVE)</td>
-                    <td colspan="2">
-                        <div id="te"></div>
-                    </td>
-                </tr>
+    <div id="table" class="container">
+        <br/>
+        <table class="table table-bordered" wid border="1px">
+            <tr class="top">
+                <td colspan="1">GROUP</td>
+                <td colspan="2">
+                    <div id="group"></div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="1">I (STEM/INFINITIVE)</td>
+                <td colspan="2">
+                    <div id="i"></div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="1">TE (PROGRESSIVE)</td>
+                <td colspan="2">
+                    <div id="te"></div>
+                </td>
+            </tr>
 
-                <tr class="top">
-                    <td></td>
-                    <td>POSITIVE</td>
-                    <td>NEGATIVE</td>
-                </tr>
+            <tr class="top">
+                <td></td>
+                <td>POSITIVE</td>
+                <td>NEGATIVE</td>
+            </tr>
 
 
-                <tr>
-                    <td>U (PLAIN/DICTIONARY)
-                        <span class="text-muted">A informal form used for casual situations, e.g. talking to friends.</span>
-                    </td>
-                    <td>
-                        <div id="u"></div>
-                    </td>
-                    <td>
-                        <div id="nai"></div>
-                    </td>
-                </tr>
+            <tr>
+                <td>U (PLAIN/DICTIONARY)
+                    <span class="text-muted">A informal form used for casual situations, e.g. talking to friends.</span>
+                </td>
+                <td>
+                    <div id="u"></div>
+                </td>
+                <td>
+                    <div id="nai"></div>
+                </td>
+            </tr>
 
-                <tr>
-                    <td>MASU (FORMAL)
-                        <span class="text-muted">A formal form used for polite situations, e.g. talking to superiors.</span>
-                    </td>
-                    <td>
-                        <div id="masu"></div>
-                    </td>
-                    <td>
-                        <div id="masen"></div>
-                    </td>
-                </tr>
+            <tr>
+                <td>MASU (FORMAL)
+                    <span class="text-muted">A formal form used for polite situations, e.g. talking to superiors.</span>
+                </td>
+                <td>
+                    <div id="masu"></div>
+                </td>
+                <td>
+                    <div id="masen"></div>
+                </td>
+            </tr>
 
-                <tr>
-                    <td>TA (PAST)
-                        <span class="text-muted">A informal past form used for casual situations.</span>
-                    </td>
-                    <td>
-                        <div id="ta"></div>
-                    </td>
-                    <td>
-                        <div id="nakatta"></div>
-                    </td>
-                </tr>
+            <tr>
+                <td>TA (PAST)
+                    <span class="text-muted">A informal past form used for casual situations.</span>
+                </td>
+                <td>
+                    <div id="ta"></div>
+                </td>
+                <td>
+                    <div id="nakatta"></div>
+                </td>
+            </tr>
 
-                <tr>
-                    <td>MASHITA (FORMAL PAST)
-                        <span class="text-muted">A formal past form used for polite situations.</span>
-                    </td>
-                    <td>
-                        <div id="mashita">
+            <tr>
+                <td>MASHITA (FORMAL PAST)
+                    <span class="text-muted">A formal past form used for polite situations.</span>
+                </td>
+                <td>
+                    <div id="mashita">
+                    </div>
+                </td>
+                <td>
+                    <div id="masendeshita"></div>
+                </td>
+            </tr>
 
-                        </div>
-                    </td>
-                    <td>
-                        <div id="masendeshita"></div>
-                    </td>
-                </tr>
+            <tr>
+                <td>OU (VOLITIONAL)
+                    <span class="text-muted">A invitational form used to propose, equivalent to "Let's <em>verb</em>".</span>
+                </td>
+                <td>
+                    <div id="ou"></div>
+                </td>
+                <td>
+                    <div id="naidarou"></div>
+                </td>
+            </tr>
 
-                <tr>
-                    <td>OU (VOLITIONAL)
-                        <span class="text-muted">A invitational form used to propose, equivalent to "Let's <em>verb</em>".</span>
-                    </td>
-                    <td>
-                        <div id="ou"></div>
-                    </td>
-                    <td>
-                        <div id="naidarou"></div>
-                    </td>
-                </tr>
+            <tr>
+                <td>EBA (PROVISIONAL)
+                    <span class="text-muted">A logical form used to denote consequence, equivalent to "If <em>verb</em>".</span>
+                </td>
+                <td>
+                    <div id="eba"></div>
+                </td>
+                <td>
+                    <div id="nakereba"></div>
+                </td>
+            </tr>
 
-                <tr>
-                    <td>EBA (PROVISIONAL)
-                        <span class="text-muted">A logical form used to denote consequence, equivalent to "If <em>verb</em>".</span>
-                    </td>
-                    <td>
-                        <div id="eba"></div>
-                    </td>
-                    <td>
-                        <div id="nakereba"></div>
-                    </td>
-                </tr>
+            <tr>
+                <td>ERU (POTENTIAL)
+                    <span class="text-muted">A logical form used to denote ability, equivalent to "Can <em>verb</em>".</span>
+                </td>
+                <td>
+                    <div id="eru"></div>
+                </td>
+                <td>
+                    <div id="erunai"></div>
+                </td>
+            </tr>
 
-                <tr>
-                    <td>ERU (POTENTIAL)
-                        <span class="text-muted">A logical form used to denote ability, equivalent to "Can <em>verb</em>".</span>
-                    </td>
-                    <td>
-                        <div id="eru"></div>
-                    </td>
-                    <td>
-                        <div id="erunai"></div>
-                    </td>
-                </tr>
+            <tr>
+                <td>RERU (PASSIVE)
+                    <span class="text-muted">A form equivalent to "Can <em>verb</em>".</span>
+                </td>
+                <td>
+                    <div id="reru"></div>
+                </td>
+                <td>
+                    <div id="rerunai"></div>
+                </td>
+            </tr>
 
-                <tr>
-                    <td>RERU (PASSIVE)
-                        <span class="text-muted">A form equivalent to "Can <em>verb</em>".</span>
-                    </td>
-                    <td>
-                        <div id="reru"></div>
-                    </td>
-                    <td>
-                        <div id="rerunai"></div>
-                    </td>
-                </tr>
+            <tr>
+                <td>SERU (CAUSATIVE)</td>
+                <td>
+                    <div id="seru"></div>
+                </td>
+                <td>
+                    <div id="serunai"></div>
+                </td>
+            </tr>
+        </table>
+    </div>
 
-                <tr>
-                    <td>SERU (CAUSATIVE)</td>
-                    <td>
-                        <div id="seru"></div>
-                    </td>
-                    <td>
-                        <div id="serunai"></div>
-                    </td>
-                </tr>
-            </table>
+    <div class="footer">
+        <div class="container">
+            <p class="text-muted">Uses Wanakana, JQuery, RequireJS, and Bootstrap.</p>
         </div>
+    </div>
 
-        <div class="footer">
-            <div class="container">
-                <p class="text-muted">Uses Wanakana, JQuery, RequireJS, and Bootstrap.</p>
-            </div>
-        </div>
-
-        <script type="text/javascript" src="js/lib/jquery-2.1.1.min.js"></script>
-        <script type="text/javascript" src="js/lib/bootstrap.min.js"></script>
-        <script type="text/javascript" src="js/lib/wanakana.js"></script>
-        <script type="text/javascript" src="js/main.js"></script>
-
+    <script data-main="js/main" src="js/require.js"></script>
 </body>
 
 </html>
