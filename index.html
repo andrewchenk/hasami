@@ -27,7 +27,11 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="#">Home</a>
+                    <li class="active"><a href="index.html">Home</a>
+                    </li>
+                    <li><a href="verbs.html">Verbs</a>
+                    </li>
+                    <li><a href="conjugation.html">Conjugation</a>
                     </li>
                     <li><a href="existence.html">Existence</a>
                     </li>
@@ -49,10 +53,9 @@
     </div>
     <br/>
 
-    <div id="forms" class="container">
-        <form>
-            Enter your verb here in plain (dictionary) form:
-            <input type="text" class="input-sm" id="input" placeholder="たべる"></input>
+    <div class="container">
+        <label>
+            Select desired input method:
             <div class="radio">
                 <label>
                     <input type="radio" name="input-method" value="Hiragana" checked />Hiragana
@@ -63,8 +66,15 @@
                     <input type="radio" name="input-method" value="Romaji" />Romaji
                 </label>
             </div>
-            <input type="button" class="btn btn-default" id="submit" value="Conjugate"></input>
-        </form>
+        </label>
+        <div class="form-group">
+            <label for="input">Enter verb in dictionary/plain form:</label>
+            <input type="text" class="form-control" id="input" placeholder="たべる">
+        </div>
+        <label>
+            <input type="button" class="btn btn-default" id="conjugate" value="Conjugate"></input>
+        </label>
+
     </div>
 
     <div class="container">
@@ -82,13 +92,13 @@
                 </td>
             </tr>
             <tr>
-                <td colspan="1">I (STEM/INFINITIVE)</td>
+                <td colspan="1">I - STEM/INFINITIVE</td>
                 <td colspan="2">
                     <div id="i"></div>
                 </td>
             </tr>
             <tr>
-                <td colspan="1">TE (PROGRESSIVE)</td>
+                <td colspan="1">TE - PROGRESSIVE</td>
                 <td colspan="2">
                     <div id="te"></div>
                 </td>
@@ -102,8 +112,8 @@
 
 
             <tr>
-                <td>U (PLAIN/DICTIONARY)
-                    <span class="text-muted">A informal form used for casual situations, e.g. talking to friends.</span>
+                <td>U - PLAIN
+
                 </td>
                 <td>
                     <div id="u"></div>
@@ -114,8 +124,8 @@
             </tr>
 
             <tr>
-                <td>MASU (FORMAL)
-                    <span class="text-muted">A formal form used for polite situations, e.g. talking to superiors.</span>
+                <td>MASU - POLITE
+
                 </td>
                 <td>
                     <div id="masu"></div>
@@ -126,8 +136,8 @@
             </tr>
 
             <tr>
-                <td>TA (PAST)
-                    <span class="text-muted">A informal past form used for casual situations.</span>
+                <td>TA - PAST
+
                 </td>
                 <td>
                     <div id="ta"></div>
@@ -138,8 +148,8 @@
             </tr>
 
             <tr>
-                <td>MASHITA (FORMAL PAST)
-                    <span class="text-muted">A formal past form used for polite situations.</span>
+                <td>MASHITA - POLITE PAST
+
                 </td>
                 <td>
                     <div id="mashita">
@@ -151,8 +161,8 @@
             </tr>
 
             <tr>
-                <td>OU (VOLITIONAL)
-                    <span class="text-muted">A invitational form used to propose, equivalent to "Let's <em>verb</em>".</span>
+                <td>OU - VOLITIONAL
+
                 </td>
                 <td>
                     <div id="ou"></div>
@@ -163,8 +173,8 @@
             </tr>
 
             <tr>
-                <td>EBA (PROVISIONAL)
-                    <span class="text-muted">A logical form used to denote consequence, equivalent to "If <em>verb</em>".</span>
+                <td>EBA - PROVISIONAL
+
                 </td>
                 <td>
                     <div id="eba"></div>
@@ -175,8 +185,8 @@
             </tr>
 
             <tr>
-                <td>ERU (POTENTIAL)
-                    <span class="text-muted">A logical form used to denote ability, equivalent to "Can <em>verb</em>".</span>
+                <td>ERU - POTENTIAL
+
                 </td>
                 <td>
                     <div id="eru"></div>
@@ -187,8 +197,8 @@
             </tr>
 
             <tr>
-                <td>RERU (PASSIVE)
-                    <span class="text-muted">A form equivalent to "Can <em>verb</em>".</span>
+                <td>RERU - PASSIVE
+
                 </td>
                 <td>
                     <div id="reru"></div>
@@ -199,7 +209,7 @@
             </tr>
 
             <tr>
-                <td>SERU (CAUSATIVE)</td>
+                <td>SERU - CAUSATIVE</td>
                 <td>
                     <div id="seru"></div>
                 </td>

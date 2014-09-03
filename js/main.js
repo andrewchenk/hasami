@@ -18,6 +18,11 @@ require(['jquery', 'verb', 'bootstrap'], function ($, verb) {
 
     // DOM ready
     $(document).ready(function () {
+        $("input").keyup(function (event) {
+            if (event.keyCode == 13) {
+                $("#conjugate").click();
+            }
+        });
         //check if in array
         function isInArray(array, search) {
             return array.indexOf(search) >= 0;
@@ -45,7 +50,7 @@ require(['jquery', 'verb', 'bootstrap'], function ($, verb) {
         });
 
         //Click the button to get the form value.
-        $("#submit").click(function () {
+        $("#conjugate").click(function () {
             //clear callout
             printPage("callout", "");
             //clear table

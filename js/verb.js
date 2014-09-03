@@ -3,9 +3,9 @@ define(['jquery', 'hiragana', 'wanakana'], function ($, hiragana) {
         return array.indexOf(search) >= 0;
     };
 
-    var groupOneExceptions = ["はいる", "はしる", "かえる", "かぎる", "きる", "しゃべる", "しる", "いる"];
-    var groupThree = ["くる", "する"];
-    var existence = [["いる", "ある"], ["です"]];
+    var GROUP_ONE_EXCEPTIONS = ["はいる", "はしる", "かえる", "かぎる", "きる", "しゃべる", "しる"];
+    var GROUP_THREE = ["くる", "する"];
+    var EXISTENCE = [["いる", "ある"], ["です"]];
 
     var verb = {
         //put an if check here for masu? LATER
@@ -72,21 +72,21 @@ define(['jquery', 'hiragana', 'wanakana'], function ($, hiragana) {
 
     verb.init = function () {
 
-        if (isInArray(hiragana.u, verb.end) === false) {
+        if (isInArray(hiragana.U, verb.end) === false) {
             verb.isVerb = false;
 
         } else {
             verb.isVerb = true;
         }
 
-        if (isInArray(existence[0], verb.u)) {
+        if (isInArray(EXISTENCE[0], verb.u)) {
             verb.isExist = true;
 
         } else {
             verb.isExist = false;
         }
 
-        if (isInArray(existence[1], verb.u)) {
+        if (isInArray(EXISTENCE[1], verb.u)) {
             verb.isDesu = true;
         } else {
             verb.isDesu = false;
@@ -96,22 +96,22 @@ define(['jquery', 'hiragana', 'wanakana'], function ($, hiragana) {
 
     verb.getGroup = function () {
 
-        if (isInArray(groupThree, verb.u)) {
+        if (isInArray(GROUP_THREE, verb.u)) {
             verb.group = "3";
-        } else if (verb.end === "る" && (isInArray(hiragana.i, verb.endTwo) || isInArray(hiragana.e, verb.endTwo))) {
+        } else if (verb.end === "る" && (isInArray(hiragana.I, verb.endTwo) || isInArray(hiragana.E, verb.endTwo))) {
             verb.group = "2";
-        } else if (isInArray(hiragana.u, verb.end)) {
+        } else if (isInArray(hiragana.U, verb.end)) {
             verb.group = "1";
         }
 
-        if (isInArray(groupOneExceptions, verb.u)) {
+        if (isInArray(GROUP_ONE_EXCEPTIONS, verb.u)) {
             verb.group = "1";
         }
     };
 
     verb.getI = function () {
         if (verb.group === "1") {
-            verb.preMasu = hiragana.change(verb.end, "u", "i");
+            verb.preMasu = hiragana.change(verb.end, "U", "I");
             verb.i = verb.u.slice(0, -1) + verb.preMasu;
 
         }
@@ -120,7 +120,7 @@ define(['jquery', 'hiragana', 'wanakana'], function ($, hiragana) {
         }
 
         if (verb.group === "3") {
-            verb.i = hiragana.change(verb.withoutEnd, "u", "i");
+            verb.i = hiragana.change(verb.withoutEnd, "U", "I");
         }
 
     };
@@ -131,9 +131,9 @@ define(['jquery', 'hiragana', 'wanakana'], function ($, hiragana) {
             verb.te = verb.i + "て";
         }
         if (verb.group === "1") {
-            if (isInArray(hiragana.teOne, verb.preMasu)) {
+            if (isInArray(hiragana.TE_ONE, verb.preMasu)) {
                 verb.teEnd = "んで";
-            } else if (isInArray(hiragana.teTwo, verb.preMasu)) {
+            } else if (isInArray(hiragana.TE_TWO, verb.preMasu)) {
                 verb.teEnd = "って";
             } else if (verb.preMasu === "き") {
                 verb.teEnd = "いて";
@@ -171,7 +171,7 @@ define(['jquery', 'hiragana', 'wanakana'], function ($, hiragana) {
             if (verb.preMasu === "い") {
                 verb.naiEnd = "わ";
             } else {
-                verb.naiEnd = hiragana.change(verb.preMasu, "i", "a") + "ない";
+                verb.naiEnd = hiragana.change(verb.preMasu, "I", "A") + "ない";
             }
             verb.nai = verb.withoutEnd + verb.naiEnd;
 
@@ -197,7 +197,7 @@ define(['jquery', 'hiragana', 'wanakana'], function ($, hiragana) {
             verb.ta = verb.i + "た";
         }
         if (verb.group === "1") {
-            verb.taEnd = verb.teEnd.slice(0, -1) + hiragana.change(verb.teEnd.slice(-1), "e", "a");
+            verb.taEnd = verb.teEnd.slice(0, -1) + hiragana.change(verb.teEnd.slice(-1), "E", "A");
             verb.ta = verb.withoutEnd + verb.taEnd;
         }
 
@@ -226,7 +226,7 @@ define(['jquery', 'hiragana', 'wanakana'], function ($, hiragana) {
             verb.ou = verb.i + "よう";
         }
         if (verb.group === "1") {
-            verb.ouEnd = hiragana.change(verb.preMasu, "i", "o") + "う";
+            verb.ouEnd = hiragana.change(verb.preMasu, "I", "O") + "う";
             verb.ou = verb.withoutEnd + verb.ouEnd;
         }
 
@@ -245,7 +245,7 @@ define(['jquery', 'hiragana', 'wanakana'], function ($, hiragana) {
             verb.eba = verb.i + "れば";
         }
         if (verb.group === "1") {
-            verb.ebaEnd = hiragana.change(verb.preMasu, "i", "e") + "ば";
+            verb.ebaEnd = hiragana.change(verb.preMasu, "I", "E") + "ば";
             verb.eba = verb.withoutEnd + verb.ebaEnd;
         }
 
@@ -268,7 +268,7 @@ define(['jquery', 'hiragana', 'wanakana'], function ($, hiragana) {
             verb.eru = verb.withoutEnd + "られる";
         }
         if (verb.group === "1") {
-            verb.eruEnd = hiragana.change(verb.preMasu, "i", "e") + "る";
+            verb.eruEnd = hiragana.change(verb.preMasu, "I", "E") + "る";
             verb.eru = verb.withoutEnd + verb.eruEnd;
         }
 
