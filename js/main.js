@@ -55,9 +55,9 @@ require(['jquery', 'verb', 'bootstrap'], function ($, verb) {
             printPage("callout", "");
             //clear table
             verb.getRaw();
-            verb.getU();
+            verb.getUAndSetKana();
             verb.getSlice();
-            verb.init();
+            verb.setVerb();
             if (verb.isVerb === false) {
                 printPage("callout", "<div class=\"bs-callout bs-callout-danger\"> It doesn't look like " + verb.u + " is a valid Japanese verb in plain form. Try something that ends with an \"u\".</div>");
             }

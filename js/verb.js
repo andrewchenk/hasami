@@ -42,8 +42,8 @@ define(['jquery', 'hiragana', 'wanakana'], function ($, hiragana) {
         rerunai: "",
 
         raw: "",
-        isVerb: true,
         isKana: true,
+        isVerb: true,
         isExist: false,
         isDesu: false
     };
@@ -52,7 +52,8 @@ define(['jquery', 'hiragana', 'wanakana'], function ($, hiragana) {
         verb.raw = $("#input").val();
     };
 
-    verb.getU = function () {
+    verb.getUAndSetKana = function () {
+        verb.isKana = true;
         //init verb.u for hiragana processing
         if (wanakana.isKana(verb.raw) === false) {
             verb.isKana = false;
@@ -70,26 +71,20 @@ define(['jquery', 'hiragana', 'wanakana'], function ($, hiragana) {
         verb.withoutEnd = verb.u.slice(0, -1);
     };
 
-    verb.init = function () {
-
+    verb.setVerb = function () {
+        verb.isVerb = true;
+        verb.isExist = false;
+        verb.isDesu = false;
         if (isInArray(hiragana.U, verb.end) === false) {
             verb.isVerb = false;
-
-        } else {
-            verb.isVerb = true;
         }
 
         if (isInArray(EXISTENCE[0], verb.u)) {
             verb.isExist = true;
-
-        } else {
-            verb.isExist = false;
         }
 
         if (isInArray(EXISTENCE[1], verb.u)) {
             verb.isDesu = true;
-        } else {
-            verb.isDesu = false;
         }
 
     };
@@ -131,15 +126,15 @@ define(['jquery', 'hiragana', 'wanakana'], function ($, hiragana) {
             verb.te = verb.i + "て";
         }
         if (verb.group === "1") {
-            if (isInArray(hiragana.TE_ONE, verb.preMasu)) {
+            if (isInArray(hiragana.TE_ONE, verb.end)) {
                 verb.teEnd = "んで";
-            } else if (isInArray(hiragana.TE_TWO, verb.preMasu)) {
+            } else if (isInArray(hiragana.TE_TWO, verb.end)) {
                 verb.teEnd = "って";
-            } else if (verb.preMasu === "き") {
+            } else if (verb.end === "く") {
                 verb.teEnd = "いて";
-            } else if (verb.preMasu === "ぎ") {
+            } else if (verb.end === "ぐ") {
                 verb.teEnd = "いで";
-            } else if (verb.preMasu === "し") {
+            } else if (verb.end === "す") {
                 verb.teEnd = "して";
             }
 
