@@ -1,121 +1,88 @@
-define(['jquery', 'hiragana', 'wanakana'], function ($, hiragana) {
+define(['hiragana', 'wanakana'], function (hiragana) {
     var isInArray = function (array, search) {
         return array.indexOf(search) >= 0;
     };
 
     var GROUP_ONE_EXCEPTIONS = ["はいる", "はしる", "かえる", "かぎる", "きる", "しゃべる", "しる"];
     var GROUP_THREE = ["くる", "する"];
-    var EXISTENCE = [["いる", "ある"], ["です"]];
+    var GROUP_FOUR = [["いる", "ある"], ["です"]];
 
     var verb = {
-        //put an if check here for masu? LATER
-        group: "",
-        u: "",
-        end: "",
-        endTwo: "",
-        withoutEnd: "",
-        i: "",
-        te: "",
-        preMasu: "",
-        masu: "",
-        ta: "",
-        taEnd: "",
-        nakatta: "",
-        mashita: "",
-        masendeshita: "",
-        teEnd: "",
-        nai: "",
-        naiEnd: "",
-        masen: "",
-        ou: "",
-        ouEnd: "",
-        naidarou: "",
-        eba: "",
-        ebaEnd: "",
-        nakereba: "",
-        eru: "",
-        eruEnd: "",
-        erunai: "",
-        seru: "",
-        serunai: "",
-        reru: "",
-        rerunai: "",
 
         raw: "",
+        groupOverride: false,
         isKana: true,
         isVerb: true,
         isExist: false,
         isDesu: false
     };
 
-    verb.getRaw = function () {
-        verb.raw = $("#input").val();
-    };
+    verb.initial = function () {
+        //Finding and setting properties of the verb.
 
-    verb.getUAndSetKana = function () {
-        verb.isKana = true;
-        //init verb.u for hiragana processing
+        //Get hiragana version of verb.raw, make it verb.plain
         if (wanakana.isKana(verb.raw) === false) {
             verb.isKana = false;
-            verb.u = wanakana.toHiragana(verb.raw);
+            verb.plain = wanakana.toHiragana(verb.raw);
         } else {
             verb.isKana = true;
-            verb.u = verb.raw;
-        }
-    };
+            verb.plain = verb.raw;
+        };
 
-    verb.getSlice = function () {
-        //do some initial slicing
-        verb.end = verb.u.slice(-1);
-        verb.endTwo = verb.u.slice(-2, -1);
-        verb.withoutEnd = verb.u.slice(0, -1);
-    };
+        //Find slices
+        verb.end = verb.plain.slice(-1);
+        verb.endTwo = verb.plain.slice(-2, -1);
+        verb.withoutEnd = verb.plain.slice(0, -1);
 
-    verb.setVerb = function () {
+        //Find if verb is outside categories
         verb.isVerb = true;
         verb.isExist = false;
         verb.isDesu = false;
+
         if (isInArray(hiragana.U, verb.end) === false) {
             verb.isVerb = false;
         }
 
-        if (isInArray(EXISTENCE[0], verb.u)) {
+        if (isInArray(GROUP_FOUR[0], verb.plain)) {
             verb.isExist = true;
         }
 
-        if (isInArray(EXISTENCE[1], verb.u)) {
+        if (isInArray(GROUP_FOUR[1], verb.plain)) {
             verb.isDesu = true;
         }
 
+
     };
+
 
     verb.getGroup = function () {
+        if (verb.groupOverride === false) {
+            if (isInArray(GROUP_THREE, verb.plain)) {
+                verb.group = "3";
+            } else if (verb.end === "る" && (isInArray(hiragana.I, verb.endTwo) || isInArray(hiragana.E, verb.endTwo))) {
+                verb.group = "2";
+            } else if (isInArray(hiragana.U, verb.end)) {
+                verb.group = "1";
+            }
 
-        if (isInArray(GROUP_THREE, verb.u)) {
-            verb.group = "3";
-        } else if (verb.end === "る" && (isInArray(hiragana.I, verb.endTwo) || isInArray(hiragana.E, verb.endTwo))) {
-            verb.group = "2";
-        } else if (isInArray(hiragana.U, verb.end)) {
-            verb.group = "1";
-        }
-
-        if (isInArray(GROUP_ONE_EXCEPTIONS, verb.u)) {
-            verb.group = "1";
+            if (isInArray(GROUP_ONE_EXCEPTIONS, verb.plain)) {
+                verb.group = "1";
+            }
         }
     };
 
-    verb.getI = function () {
+    verb.getStem = function () {
         if (verb.group === "1") {
             verb.preMasu = hiragana.change(verb.end, "U", "I");
-            verb.i = verb.u.slice(0, -1) + verb.preMasu;
+            verb.stem = verb.plain.slice(0, -1) + verb.preMasu;
 
         }
         if (verb.group === "2") {
-            verb.i = verb.u.slice(0, -1);
+            verb.stem = verb.plain.slice(0, -1);
         }
 
         if (verb.group === "3") {
-            verb.i = hiragana.change(verb.withoutEnd, "U", "I");
+            verb.stem = hiragana.change(verb.withoutEnd, "U", "I");
         }
 
     };
@@ -123,7 +90,7 @@ define(['jquery', 'hiragana', 'wanakana'], function ($, hiragana) {
     verb.getTe = function () {
 
         if (verb.group === "3" || verb.group === "2") {
-            verb.te = verb.i + "て";
+            verb.te = verb.stem + "て";
         }
         if (verb.group === "1") {
             if (isInArray(hiragana.TE_ONE, verb.end)) {
@@ -139,7 +106,7 @@ define(['jquery', 'hiragana', 'wanakana'], function ($, hiragana) {
             }
 
             //exception
-            if (verb.u === "いく") {
+            if (verb.plain === "いく") {
                 verb.teEnd = "って";
             }
 
@@ -148,172 +115,175 @@ define(['jquery', 'hiragana', 'wanakana'], function ($, hiragana) {
 
     };
 
-    verb.getNai = function () {
+    verb.getPlainN = function () {
         if (verb.group === "3") {
-            if (verb.u === "する") {
-                verb.nai = "しない";
+            if (verb.plain === "する") {
+                verb.plainN = "しない";
             }
-            if (verb.u === "くる") {
-                verb.nai = "こない";
+            if (verb.plain === "くる") {
+                verb.plainN = "こない";
             }
         }
 
         if (verb.group === "2") {
-            verb.nai = verb.i + "ない";
+            verb.plainN = verb.stem + "ない";
         }
 
         if (verb.group === "1") {
             if (verb.preMasu === "い") {
-                verb.naiEnd = "わ";
+                verb.plainNEnd = "わ";
             } else {
-                verb.naiEnd = hiragana.change(verb.preMasu, "I", "A") + "ない";
+                verb.plainNEnd = hiragana.change(verb.preMasu, "I", "A") + "ない";
             }
-            verb.nai = verb.withoutEnd + verb.naiEnd;
+            verb.plainN = verb.withoutEnd + verb.plainNEnd;
 
-            if (verb.u === "ある") {
-                verb.nai = "ない";
+            if (verb.plain === "ある") {
+                verb.plainN = "ない";
             }
         }
 
     };
 
-    verb.getMasu = function () {
-        verb.masu = verb.i + "ます";
 
-    };
-
-    verb.getMasen = function () {
-        verb.masen = verb.i + "ません";
-
-    };
-
-    verb.getTa = function () {
+    verb.getPast = function () {
         if (verb.group === "3" || verb.group === "2") {
-            verb.ta = verb.i + "た";
+            verb.past = verb.stem + "た";
         }
         if (verb.group === "1") {
-            verb.taEnd = verb.teEnd.slice(0, -1) + hiragana.change(verb.teEnd.slice(-1), "E", "A");
-            verb.ta = verb.withoutEnd + verb.taEnd;
+            verb.pastEnd = verb.teEnd.slice(0, -1) + hiragana.change(verb.teEnd.slice(-1), "E", "A");
+            verb.past = verb.withoutEnd + verb.pastEnd;
         }
 
     };
 
-    verb.getNakatta = function () {
-        verb.nakatta = verb.nai.slice(0, -1) + "かった";
+    verb.getPastN = function () {
+        verb.pastN = verb.plainN.slice(0, -1) + "かった";
 
     };
 
-    verb.getMashita = function () {
-        verb.mashita = verb.i + "ました";
-
-    };
-
-    verb.getMasendeshita = function () {
-        verb.masendeshita = verb.masen + " でした";
-
-    };
-
-    verb.getOu = function () {
+    verb.getPotential = function () {
         if (verb.group === "3") {
-            verb.ou = verb.nai.slice(0, -2) + "よう";
-        }
-        if (verb.group === "2") {
-            verb.ou = verb.i + "よう";
-        }
-        if (verb.group === "1") {
-            verb.ouEnd = hiragana.change(verb.preMasu, "I", "O") + "う";
-            verb.ou = verb.withoutEnd + verb.ouEnd;
-        }
-
-    };
-
-    verb.getNaidarou = function () {
-        verb.naidarou = verb.nai + " だろう";
-
-    };
-
-    verb.getEba = function () {
-        if (verb.group === "3") {
-            verb.eba = verb.withoutEnd + "れば";
-        }
-        if (verb.group === "2") {
-            verb.eba = verb.i + "れば";
-        }
-        if (verb.group === "1") {
-            verb.ebaEnd = hiragana.change(verb.preMasu, "I", "E") + "ば";
-            verb.eba = verb.withoutEnd + verb.ebaEnd;
-        }
-
-    };
-
-    verb.getNakereba = function () {
-        verb.nakereba = verb.nai.slice(0, -1) + "ければ";
-    };
-
-    verb.getEru = function () {
-        if (verb.group === "3") {
-            if (verb.u === "する") {
-                verb.eru = "できる";
+            if (verb.plain === "する") {
+                verb.potential = "できる";
             }
-            if (verb.u === "くる") {
-                verb.eru = "こられる";
+            if (verb.plain === "くる") {
+                verb.potential = "こられる";
             }
         }
         if (verb.group === "2") {
-            verb.eru = verb.withoutEnd + "られる";
+            verb.potential = verb.withoutEnd + "られる";
         }
         if (verb.group === "1") {
-            verb.eruEnd = hiragana.change(verb.preMasu, "I", "E") + "る";
-            verb.eru = verb.withoutEnd + verb.eruEnd;
+            verb.potentialEnd = hiragana.change(verb.preMasu, "I", "E") + "る";
+            verb.potential = verb.withoutEnd + verb.potentialEnd;
         }
 
     };
 
-    verb.getErunai = function () {
-        verb.erunai = verb.eru.slice(0, -1) + "ない";
+    verb.getPotentialN = function () {
+        verb.potentialN = verb.potential.slice(0, -1) + "ない";
     };
 
-    verb.getReru = function () {
+    verb.getConditional = function () {
         if (verb.group === "3") {
-            if (verb.u === "する") {
-                verb.reru = "される";
+            verb.conditional = verb.withoutEnd + "れば";
+        }
+        if (verb.group === "2") {
+            verb.conditional = verb.stem + "れば";
+        }
+        if (verb.group === "1") {
+            verb.conditionalEnd = hiragana.change(verb.preMasu, "I", "E") + "ば";
+            verb.conditional = verb.withoutEnd + verb.conditionalEnd;
+        }
+
+    };
+
+    verb.getConditionalN = function () {
+        verb.conditionalN = verb.plainN.slice(0, -1) + "ければ";
+    };
+
+    verb.getVolitional = function () {
+        if (verb.group === "3") {
+            verb.volitional = verb.plainN.slice(0, -2) + "よう";
+        }
+        if (verb.group === "2") {
+            verb.volitional = verb.stem + "よう";
+        }
+        if (verb.group === "1") {
+            verb.volitionalEnd = hiragana.change(verb.preMasu, "I", "O") + "う";
+            verb.volitional = verb.withoutEnd + verb.volitionalEnd;
+        }
+
+    };
+
+    verb.getVolitionalN = function () {
+        verb.volitionalN = verb.plainN + " だろう";
+
+    };
+
+    verb.getCommand = function () {
+        if (verb.group === "3") {
+            if (verb.plain === "する") {
+                verb.command = "しろ";
             }
-            if (verb.u === "くる") {
-                verb.reru = "こらせる";
+            if (verb.plain === "くる") {
+                verb.command = "こい";
             }
         }
         if (verb.group === "2") {
-            verb.reru = verb.eru;
+            verb.command = verb.stem + "ろ";
         }
         if (verb.group === "1") {
-            verb.reru = verb.nai.slice(0, -2) + "れる";
+            verb.commandEnd = hiragana.change(verb.preMasu, "I", "E");
+            verb.command = verb.withoutEnd + verb.commandEnd;
         }
     };
 
-    verb.getRerunai = function () {
-        verb.rerunai = verb.reru.slice(0, -1) + "ない";
+    verb.getCommandN = function () {
+        verb.commandN = verb.plain + "な";
     };
 
-    verb.getSeru = function () {
+    verb.getPassive = function () {
         if (verb.group === "3") {
-            if (verb.u === "する") {
-                verb.seru = "させる";
+            if (verb.plain === "する") {
+                verb.passive = "される";
             }
-            if (verb.u === "くる") {
-                verb.seru = "こさせる";
+            if (verb.plain === "くる") {
+                verb.passive = "こらせる";
             }
         }
         if (verb.group === "2") {
-            verb.seru = verb.withoutEnd + "させる";
+            verb.passive = verb.withoutEnd + "られる"; //same as potential
         }
         if (verb.group === "1") {
-            verb.seru = verb.nai.slice(0, -2) + "せる";
+            verb.passive = verb.plainN.slice(0, -2) + "れる";
+        }
+    };
+
+    verb.getPassiveN = function () {
+        verb.passiveN = verb.passive.slice(0, -1) + "ない";
+    };
+
+    verb.getCausative = function () {
+        if (verb.group === "3") {
+            if (verb.plain === "する") {
+                verb.causative = "させる";
+            }
+            if (verb.plain === "くる") {
+                verb.causative = "こさせる";
+            }
+        }
+        if (verb.group === "2") {
+            verb.causative = verb.withoutEnd + "させる";
+        }
+        if (verb.group === "1") {
+            verb.causative = verb.plainN.slice(0, -2) + "せる";
         }
 
     };
 
-    verb.getSerunai = function () {
-        verb.serunai = verb.seru.slice(0, -1) + "ない";
+    verb.getCausativeN = function () {
+        verb.causativeN = verb.causative.slice(0, -1) + "ない";
     };
 
     verb.post = function () {

@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="css/bootstrap-flat.min.css" />
     <link rel="stylesheet" href="css/bootstrap-flat-extras.min.css" />
     <link rel="stylesheet" href="css/style.css" />
-    <title>Japanese Verb Conjugator</title>
+    <title>Hasami | Japanese Verb Conjugator</title>
 </head>
 
 <body>
@@ -29,15 +29,11 @@
                 <ul class="nav navbar-nav">
                     <li class="active"><a href="index.html">Home</a>
                     </li>
-                    <li><a href="group.html">Group</a>
-                    </li>
-                    <li><a href="conjugation.html">Conjugation</a>
-                    </li>
-                    <li><a href="existence.html">Existence</a>
+                    <li><a href="about.html">About</a>
                     </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="https://github.com/cardboardtheory/hasami">Github</a>
+                    <li><a href="https://github.com/zoutachi/hasami">Github</a>
                     </li>
                 </ul>
             </div>
@@ -47,29 +43,53 @@
 
     <div class="bs-masthead">
         <div class="container">
-            <h1>Hasami Verb Conjugator</h1>
+            <h1>Japanese Verb Conjugator</h1>
             <p class="lead">The <em>Won</em> conjugator you need</p>
         </div>
     </div>
     <br/>
 
     <div class="container">
-        <label>
-            Select desired input method:
-            <div class="radio">
-                <label>
-                    <input type="radio" name="input-method" value="Hiragana" checked />Hiragana
-                </label>
-            </div>
-            <div class="radio">
-                <label>
-                    <input type="radio" name="input-method" value="Romaji" />Romaji
-                </label>
-            </div>
-        </label>
+        <div class="form-inline">
+            <label class="control-label">
+                Select desired input method:
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="input-method" value="Hiragana" checked />Hiragana
+                    </label>
+                </div>
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="input-method" value="Romaji" />Romaji
+                    </label>
+                </div>
+            </label>
+        </div>
+
+        <div class="form-inline">
+            <label class="control-label">
+                Conjugate verb as:
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="verb-group" value="Automatic" checked />Automatic (use this unless the verb is an <a href="http://en.wikipedia.org/wiki/Japanese_irregular_verbs#Regular_but_unusual">exception</a>)
+                    </label>
+                </div>
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="verb-group" value="Group 1" />Group 1
+                    </label>
+                </div>
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="verb-group" value="Group 2">Group 2
+                    </label>
+                </div>
+            </label>
+        </div>
+
         <div class="form-group">
             <label for="input">Enter verb in dictionary/plain form:</label>
-            <input type="text" class="form-control" id="input" placeholder="たべる">
+            <input type="text" class="form-control" id="input" placeholder="する">
         </div>
         <label>
             <input type="button" class="btn btn-default" id="conjugate" value="Conjugate"></input>
@@ -86,21 +106,21 @@
         <br/>
         <table class="table table-bordered" wid border="1px">
             <tr class="top">
-                <td colspan="1"> <a href="group.html">Group</a>
+                <td colspan="1"> <a href="http://www.guidetojapanese.org/learn/grammar/verbs#page-title">Group</a>
                 </td>
                 <td colspan="2">
                     <div id="group"></div>
                 </td>
             </tr>
             <tr>
-                <td colspan="1"><a href="conjugation.html#i">Stem -i</a>
+                <td colspan="1"><a href="http://www.guidetojapanese.org/learn/grammar/polite#part2">i (Stem)</a>
                 </td>
                 <td colspan="2">
-                    <div id="i"></div>
+                    <div id="stem"></div>
                 </td>
             </tr>
             <tr>
-                <td colspan="1"><a href="conjugation.html#te">te (Progressive)</a>
+                <td colspan="1"><a href="http://www.guidetojapanese.org/learn/complete/progressive_tense#page-title">te (Progressive)</a>
                 </td>
                 <td colspan="2">
                     <div id="te"></div>
@@ -113,110 +133,95 @@
                 <td>Negative</td>
             </tr>
 
-
             <tr>
                 <td>
-                    <a href="conjugation.html#u">u (Plain)</a>
+                    <a href="http://www.guidetojapanese.org/learn/complete/verbs#page-title">u (Plain)</a>
                 </td>
                 <td>
-                    <div id="u"></div>
+                    <div id="plain"></div>
                 </td>
                 <td>
-                    <div id="nai"></div>
+                    <div id="plainN"></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td><a href="http://www.guidetojapanese.org/learn/grammar/past_tense#part2">ta (Past)</a>
+
+                </td>
+                <td>
+                    <div id="past"></div>
+                </td>
+                <td>
+                    <div id="pastN"></div>
                 </td>
             </tr>
 
             <tr>
-                <td><a href="conjugation.html#masu">masu (Polite)</a>
+                <td><a href="http://www.guidetojapanese.org/learn/grammar/potential#part2">eru (Potential)
 
                 </td>
                 <td>
-                    <div id="masu"></div>
+                    <div id="potential"></div>
                 </td>
                 <td>
-                    <div id="masen"></div>
+                    <div id="potentialN"></div>
+                </td>
+            </tr>
+            
+            <tr>
+                <td><a href="http://www.guidetojapanese.org/learn/grammar/conditionals#part4">ba (Conditional)
+
+                </td>
+                <td>
+                    <div id="conditional"></div>
+                </td>
+                <td>
+                    <div id="conditionalN"></div>
                 </td>
             </tr>
 
             <tr>
-                <td><a href="conjugation.html#ta">ta (Past)</a>
-
+                <td><a href="http://www.guidetojapanese.org/learn/complete/desire_volition#page-title">ou (Volitional)
                 </td>
                 <td>
-                    <div id="ta"></div>
+                    <div id="volitional"></div>
                 </td>
                 <td>
-                    <div id="nakatta"></div>
+                    <div id="volitionalN"></div>
                 </td>
             </tr>
 
             <tr>
-                <td><a href="conjugation.html#mashita">mashita (Polite Past)</a>
-
+                <td><a href="http://www.guidetojapanese.org/learn/grammar/requests#part5">ro (Command)                  </td>
+                <td>
+                    <div id="command"></div>
                 </td>
                 <td>
-                    <div id="mashita">
-                    </div>
-                </td>
-                <td>
-                    <div id="masendeshita"></div>
+                    <div id="commandN"></div>
                 </td>
             </tr>
 
             <tr>
-                <td><a href="conjugation.html#ou">ou (Volitional)
+                <td><a href="http://www.guidetojapanese.org/learn/grammar/causepass#part3">reru (Passive)
+
                 </td>
                 <td>
-                    <div id="ou"></div>
+                    <div id="passive"></div>
                 </td>
                 <td>
-                    <div id="naidarou"></div>
+                    <div id="passiveN"></div>
                 </td>
             </tr>
-
+            
             <tr>
-                <td><a href="conjugation.html#ba">ba (Conditional)
-
+                <td><a href="http://www.guidetojapanese.org/learn/grammar/causepass#part2">seru (Causative)</td>
+                <td>
+                    <div id="causative"></div>
                 </td>
                 <td>
-                    <div id="eba"></div>
-                </td>
-                <td>
-                    <div id="nakereba"></div>
-                </td>
-            </tr>
-
-            <tr>
-                <td><a href="conjugation.html#eru">eru (Potential)
-
-                </td>
-                <td>
-                    <div id="eru"></div>
-                </td>
-                <td>
-                    <div id="erunai"></div>
-                </td>
-            </tr>
-
-            <tr>
-                <td><a href="conjugation.html#seru">seru (Causative)</td>
-                <td>
-                    <div id="seru"></div>
-                </td>
-                <td>
-                    <div id="serunai"></div>
-                </td>
-            </tr>
-
-            <tr>
-                <td><a href="conjugation.html#reru">reru (Passive)
-
-                </td>
-                <td>
-                    <div id="reru"></div>
-                </td>
-                <td>
-                    <div id="rerunai"></div>
+                    <div id="causativeN"></div>
                 </td>
             </tr>
 
