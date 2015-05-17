@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/bootstrap-flat.min.css" />
+    <link rel="stylesheet" href="css/bootstrap-flat-extras.min.css" />
+    <link rel="stylesheet" href="css/bootstrap-extensions.css" />
+    <title>Hasami | Japanese Adjective Conjugator</title>
+</head>
+
+<body>
+
+    <!-- Static navbar -->
+    <div class="navbar navbar-default navbar-static-top" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.html">Hasami</a>
+            </div>
+            <div class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="verb.html">Verb</a>
+                    </li>
+                    <li class="active"><a href="adjective.html">Adjective</a>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="about.html">About</a>
+                    </li>
+                    <li><a href="https://github.com/zoutachi/hasami">Github</a>
+                    </li>
+                </ul>
+            </div>
+            <!--/.nav-collapse -->
+        </div>
+    </div>
+
+    <div class="bs-masthead">
+        <div class="container">
+            <h1>Japanese Adjective Conjugator</h1>
+            <p class="lead">形容詞活用・形容動詞活用</p>
+        </div>
+    </div>
+    <br/>
+
+    <div class="container">
+        <div class="form-inline">
+            <label class="control-label">
+                Select desired input method:
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="input-method" value="Hiragana" checked />Hiragana
+                    </label>
+                </div>
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="input-method" value="Romaji" />Romaji
+                    </label>
+                </div>
+            </label>
+        </div>
+
+        <div class="form-inline">
+            <label class="control-label">
+                Conjugate adjective as:
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="adjective-group" value="Automatic" checked />Automatic (use this unless the adjective is an <a href="http://www.learn-japanese-adventure.com/japanese-adjectives.html#na-adjective-exceptions">exception</a>)
+                    </label>
+                </div>
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="adjective-group" value="na" />na-adjective
+                    </label>
+                </div>
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="adjective-group" value="i" />i-adjective
+                    </label>
+                </div>
+            </label>
+        </div>
+
+        <div class="form-group">
+            <label for="input">Enter adjective without kanji:</label>
+            <input type="text" class="form-control" id="input" placeholder="すき">
+        </div>
+        <label>
+            <input type="button" class="btn btn-default" id="conjugate" value="Conjugate"></input>
+        </label>
+
+    </div>
+
+    <div class="container">
+        <div id="callout">
+        </div>
+    </div>
+
+    <div id="table" class="container">
+        <br/>
+        <table class="table table-bordered" wid border="1px">
+            <tr class="top">
+                <td colspan="1"> <a href="http://www.guidetojapanese.org/learn/grammar/adjectives#page-title">Group</a>
+                </td>
+                <td colspan="2">
+                    <div id="group"></div>
+                </td>
+            </tr>
+
+            <tr class="top">
+                <td></td>
+                <td>Positive</td>
+                <td>Negative</td>
+            </tr>
+
+            <tr>
+                <td>
+                    <a href="http://www.learn-japanese-adventure.com/japanese-adjectives.html">i (Plain)</a>
+                </td>
+                <td>
+                    <div id="plain"></div>
+                </td>
+                <td>
+                    <div id="plainN"></div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <a href="http://www.learn-japanese-adventure.com/japanese-adjectives.html">i/na (Predicate)</a>
+                </td>
+                <td>
+                    <div id="predicate"></div>
+                </td>
+                <td>
+                    <div id="predicateN"></div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <a href="http://www.guidetojapanese.org/learn/grammar/adverbs#part2">ni/ku (Adverb)</a>
+                </td>
+                <td>
+                    <div id="adverb"></div>
+                </td>
+                <td>
+                    <div id="adverbN"></div>
+                </td>
+            </tr>
+
+            <tr>
+                <td><a href="http://www.guidetojapanese.org/learn/grammar/compound#part2">te (Te-form)</a>
+                </td>
+                <td>
+                    <div id="te"></div>
+                </td>
+                <td>
+                    <div id="teN"></div>
+                </td>
+            </tr>
+
+            <tr>
+                <td><a href="http://www.guidetojapanese.org/learn/grammar/adjectives#page-title">ta (Past)</a>
+
+                </td>
+                <td>
+                    <div id="past"></div>
+                </td>
+                <td>
+                    <div id="pastN"></div>
+                </td>
+            </tr>
+
+
+
+        </table>
+    </div>
+
+    <div class="footer">
+        <div class="container">
+            <p class="text-muted">This site is licensed under the <a href="http://www.gnu.org/copyleft/gpl.html">GNU General Public License v3.0.</a>
+            </p>
+        </div>
+    </div>
+
+    <script data-main="js/adjective-main" src="js/require.js"></script>
+</body>
+
+</html>

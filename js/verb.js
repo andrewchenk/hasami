@@ -23,24 +23,27 @@ define(['hiragana', 'wanakana'], function (hiragana) {
         //Get hiragana version of verb.raw, make it verb.plain
         if (wanakana.isKana(verb.raw) === false) {
             verb.isKana = false;
+            verb.plainRomaji = verb.raw;
             verb.plain = wanakana.toHiragana(verb.raw);
         } else {
             verb.isKana = true;
+            verb.plainRomaji = wanakana.toRomaji(verb.raw);
             verb.plain = verb.raw;
         };
 
         //Find slices
-        verb.end = verb.plain.slice(-1);
-        verb.endTwo = verb.plain.slice(-2, -1);
+        verb.endChar = verb.plain.slice(-1);
+        verb.secondCharToEnd = verb.plain.slice(-2, -1);
         verb.withoutEnd = verb.plain.slice(0, -1);
 
         //Find if verb is outside categories
-        verb.isVerb = true;
         verb.isExist = false;
         verb.isDesu = false;
 
-        if (isInArray(hiragana.U, verb.end) === false) {
+        if (isInArray(hiragana.U, verb.endChar) === false) {
             verb.isVerb = false;
+        } else {
+            verb.isVerb = true;
         }
 
         if (isInArray(GROUP_FOUR[0], verb.plain)) {
@@ -59,9 +62,9 @@ define(['hiragana', 'wanakana'], function (hiragana) {
         if (verb.groupOverride === false) {
             if (isInArray(GROUP_THREE, verb.plain)) {
                 verb.group = "3";
-            } else if (verb.end === "る" && (isInArray(hiragana.I, verb.endTwo) || isInArray(hiragana.E, verb.endTwo))) {
+            } else if (verb.endChar === "る" && (isInArray(hiragana.I, verb.secondCharToEnd) || isInArray(hiragana.E, verb.secondCharToEnd))) {
                 verb.group = "2";
-            } else if (isInArray(hiragana.U, verb.end)) {
+            } else if (isInArray(hiragana.U, verb.endChar)) {
                 verb.group = "1";
             }
 
@@ -73,7 +76,7 @@ define(['hiragana', 'wanakana'], function (hiragana) {
 
     verb.getStem = function () {
         if (verb.group === "1") {
-            verb.preMasu = hiragana.change(verb.end, "U", "I");
+            verb.preMasu = hiragana.change(verb.endChar, "U", "I");
             verb.stem = verb.plain.slice(0, -1) + verb.preMasu;
 
         }
@@ -83,34 +86,6 @@ define(['hiragana', 'wanakana'], function (hiragana) {
 
         if (verb.group === "3") {
             verb.stem = hiragana.change(verb.withoutEnd, "U", "I");
-        }
-
-    };
-
-    verb.getTe = function () {
-
-        if (verb.group === "3" || verb.group === "2") {
-            verb.te = verb.stem + "て";
-        }
-        if (verb.group === "1") {
-            if (isInArray(hiragana.TE_ONE, verb.end)) {
-                verb.teEnd = "んで";
-            } else if (isInArray(hiragana.TE_TWO, verb.end)) {
-                verb.teEnd = "って";
-            } else if (verb.end === "く") {
-                verb.teEnd = "いて";
-            } else if (verb.end === "ぐ") {
-                verb.teEnd = "いで";
-            } else if (verb.end === "す") {
-                verb.teEnd = "して";
-            }
-
-            //exception
-            if (verb.plain === "いく") {
-                verb.teEnd = "って";
-            }
-
-            verb.te = verb.withoutEnd + verb.teEnd;
         }
 
     };
@@ -143,6 +118,39 @@ define(['hiragana', 'wanakana'], function (hiragana) {
         }
 
     };
+
+    verb.getTe = function () {
+
+        if (verb.group === "3" || verb.group === "2") {
+            verb.te = verb.stem + "て";
+        }
+        if (verb.group === "1") {
+            if (isInArray(hiragana.TE_ONE, verb.endChar)) {
+                verb.teEnd = "んで";
+            } else if (isInArray(hiragana.TE_TWO, verb.endChar)) {
+                verb.teEnd = "って";
+            } else if (verb.endChar === "く") {
+                verb.teEnd = "いて";
+            } else if (verb.endChar === "ぐ") {
+                verb.teEnd = "いで";
+            } else if (verb.endChar === "す") {
+                verb.teEnd = "して";
+            }
+
+            //exception
+            if (verb.plain === "いく") {
+                verb.teEnd = "って";
+            }
+
+            verb.te = verb.withoutEnd + verb.teEnd;
+        }
+
+    };
+
+    verb.getTeN = function () {
+        verb.teN = verb.plainN.slice(0, -1) + "くて";
+    };
+
 
 
     verb.getPast = function () {
@@ -279,7 +287,6 @@ define(['hiragana', 'wanakana'], function (hiragana) {
         if (verb.group === "1") {
             verb.causative = verb.plainN.slice(0, -2) + "せる";
         }
-
     };
 
     verb.getCausativeN = function () {

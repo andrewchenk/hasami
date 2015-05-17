@@ -83,8 +83,9 @@ require(['jquery', 'verb', 'bootstrap'], function ($, verb) {
             }
             verb.getGroup();
             verb.getStem();
-            verb.getTe();
             verb.getPlainN();
+            verb.getTe();
+            verb.getTeN();
             verb.getPast();
             verb.getPastN();
             verb.getVolitional();

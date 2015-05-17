@@ -7,8 +7,8 @@
     <link rel="stylesheet" href="css/bootstrap.min.css" />
     <link rel="stylesheet" href="css/bootstrap-flat.min.css" />
     <link rel="stylesheet" href="css/bootstrap-flat-extras.min.css" />
-    <link rel="stylesheet" href="css/style.css" />
-    <title>Japanese Verb Conjugator</title>
+    <link rel="stylesheet" href="css/bootstrap-extensions.css" />
+    <title>Hasami | About</title>
 </head>
 
 <body>
@@ -23,16 +23,18 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">Hasami</a>
+                <a class="navbar-brand" href="index.html">Hasami</a>
             </div>
-            <div class="navbar-collapse collapse">
+            <div class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
-                    <li><a href="index.html">Home</a>
+                    <li><a href="verb.html">Verb</a>
                     </li>
-                    <li class="active"><a href="about.html">About</a>
+                    <li><a href="adjective.html">Adjective</a>
                     </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
+                    <li class="active"><a href="about.html">About</a>
+                    </li>
                     <li><a href="https://github.com/zoutachi/hasami">Github</a>
                     </li>
                 </ul>
@@ -50,12 +52,29 @@
     <br/>
 
     <div class="container">
-        <img src="img/hakase.jpg" class="img-responsive">
+
+        <p>Hasami uses
+            <a href="http://wanakana.com/Wanakana"> Wanakana</a>, JQuery, RequireJS, and Bootstrap.
+        </p>
+        <p>Similar projects of interest:</p>
+        <ul>
+            <li><a href="http://www.edrdg.org/jmdictdb/cgi-bin/srchformq.py?svc=jmdict&sid=">JMdictDB</a>
+                <p>Japanese word database, which allows you to see different words for the same reading and choose accordingly. Also includes definitions and other information about the word. Supports kanji. Works for both verbs and adjectives. Accepts both hiragana and romaji. On top of that, <a href="http://edrdg.org/~smg/">open-source</a>.</p>
+            </li>
+            <li><a href="http://www.sljfaq.org/cgi/verb-inflect.cgi">SljFAQ verb inflector</a>
+                <p>Only works for verbs. Automated. Accepts both hiragana and romaji.</p>
+            </li>
+            <li>
+                <a href="https://github.com/kariminf/JapKatsuyou">JapKatsuyou</a>
+                <p>Verb conjugator. Works on Ubuntu, Mint, and Windows. Also open-source.</p>
+            </li>
+        </ul>
     </div>
 
     <div class="footer">
         <div class="container">
-            <p class="text-muted">Uses Wanakana, JQuery, RequireJS, and Bootstrap.</p>
+            <p class="text-muted">This site is licensed under the <a href="http://www.gnu.org/copyleft/gpl.html">GNU General Public License v3.0.</a>
+            </p>
         </div>
     </div>
 
